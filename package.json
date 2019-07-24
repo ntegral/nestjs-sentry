@@ -7,10 +7,14 @@
     }
   ],
   "name": "@ntegral/nestjs-sentry",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Provides an injectable sentry.io client to provide enterprise logging nestjs modules",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntegral/nestjs-sentry"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist",
