@@ -26,9 +26,9 @@ export interface ISentryService {
 export declare abstract class SentryBaseService extends Logger {
 }
 export declare class SentryService extends Logger {
-    private readonly options;
+    private readonly options?;
     app: string;
-    constructor(options: SentryModuleOptions);
+    constructor(options?: SentryModuleOptions | undefined);
     log(message: string, context?: string): void;
     error(message: string, trace?: string, context?: string): void;
     warn(message: string, context?: string): void;

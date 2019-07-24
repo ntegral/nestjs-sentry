@@ -116,7 +116,7 @@ export class SentryService extends Logger {
     app: string = '@ntegral/nestjs-sentry: ';
     constructor(
         @Inject(SENTRY_MODULE_OPTIONS)
-        private readonly options: SentryModuleOptions,
+        private readonly options?: SentryModuleOptions,
       ) {
         super();
         if (!(options && options.dsn)) {
