@@ -24,7 +24,6 @@ let SentryService = class SentryService extends common_1.Logger {
         this.options = options;
         this.app = '@ntegral/nestjs-sentry: ';
         if (!(options && options.dsn)) {
-            console.log('options not found. Did you use SentryModule.forRoot?');
             return;
         }
         Sentry.init({
@@ -34,7 +33,6 @@ let SentryService = class SentryService extends common_1.Logger {
             release: options.release,
             logLevel: options.logLevel
         });
-        console.log('sentry.io initialized', Sentry);
     }
     log(message, context) {
         message = `${this.app} ${message}`;

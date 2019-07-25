@@ -120,7 +120,7 @@ export class SentryService extends Logger {
       ) {
         super();
         if (!(options && options.dsn)) {
-          console.log('options not found. Did you use SentryModule.forRoot?');
+          // console.log('options not found. Did you use SentryModule.forRoot?');
           return;
         }
 
@@ -131,7 +131,7 @@ export class SentryService extends Logger {
           release: options.release,
           logLevel: options.logLevel
         });
-        console.log('sentry.io initialized', Sentry);
+        // console.log('sentry.io initialized', Sentry);
       }
 
   log(message: string, context?: string) {
