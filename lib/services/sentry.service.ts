@@ -2,6 +2,7 @@ import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Scope } from '@sentry/hub';
 import { Breadcrumb, Event, Severity, User } from '@sentry/types';
 import * as Sentry from '@sentry/node';
+import * as Integrations from '@sentry/node';
 
 import { SENTRY_MODULE_OPTIONS } from '../common/sentry.constants';
 import { SentryModuleOptions } from '../interfaces/sentry-options.interface';
@@ -129,7 +130,15 @@ export class SentryService extends Logger {
           debug: options.debug,
           environment: options.environment,
           release: options.release,
-          logLevel: options.logLevel
+          logLevel: options.logLevel,
+          integrations: [
+            new Sentry.Integrations.OnUncaughtException({
+              onFatalError: async (err) => {
+                await Sentry.getCurrentHub().captureException(err);
+                process.exit(1);
+              }
+            })
+          ]
         });
         // console.log('sentry.io initialized', Sentry);
       }
