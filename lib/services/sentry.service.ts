@@ -1,11 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Scope } from '@sentry/hub';
-import { Breadcrumb, Event, Severity, User } from '@sentry/types';
+import { Breadcrumb, Event, Severity, User, Options, Client } from '@sentry/types';
 import * as Sentry from '@sentry/node';
 import * as Integrations from '@sentry/node';
 
 import { SENTRY_MODULE_OPTIONS } from '../common/sentry.constants';
 import { SentryModuleOptions } from '../interfaces/sentry-options.interface';
+import { async } from 'rxjs/internal/scheduler/async';
 
 export interface ISentryService {
   /**
@@ -127,17 +128,25 @@ export class SentryService extends Logger {
 
         Sentry.init({
           dsn: options.dsn,
-          debug: options.debug,
+          debug: options.debug === true ? false : options.debug,
           environment: options.environment,
           release: options.release,
           logLevel: options.logLevel,
           integrations: [
             new Sentry.Integrations.OnUncaughtException({
               onFatalError: async (err) => {
-                await Sentry.getCurrentHub().captureException(err);
-                process.exit(1);
-              }
-            })
+                console.error('uncaughtException, not cool!')
+                console.error(err);
+                if (err.name === 'SentryError') {
+                  //ignore
+                } else {
+                  await (Sentry.getCurrentHub().getClient<Client<Options>>() as Client<Options>).captureException(err);
+                  process.exit(1);
+                }
+              },
+            }),
+            new Sentry.Integrations.OnUnhandledRejection()
+              //No callback he
           ]
         });
         // console.log('sentry.io initialized', Sentry);

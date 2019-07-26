@@ -36,17 +36,24 @@ let SentryService = class SentryService extends common_1.Logger {
         }
         Sentry.init({
             dsn: options.dsn,
-            debug: options.debug,
+            debug: options.debug === true ? false : options.debug,
             environment: options.environment,
             release: options.release,
             logLevel: options.logLevel,
             integrations: [
                 new Sentry.Integrations.OnUncaughtException({
                     onFatalError: (err) => __awaiter(this, void 0, void 0, function* () {
-                        yield Sentry.getCurrentHub().captureException(err);
-                        process.exit(1);
-                    })
-                })
+                        console.error('uncaughtException, not cool!');
+                        console.error(err);
+                        if (err.name === 'SentryError') {
+                        }
+                        else {
+                            yield Sentry.getCurrentHub().getClient().captureException(err);
+                            process.exit(1);
+                        }
+                    }),
+                }),
+                new Sentry.Integrations.OnUnhandledRejection()
             ]
         });
     }

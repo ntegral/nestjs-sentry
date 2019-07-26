@@ -6,14 +6,6 @@
   <p align="center">
     Provides an injectable sentry.io client to provide enterprise logging nestjs modules
   </p>
-  <!-- 
-  <p align="center">
-    <img src="https://circleci.com/gh/dhaspden/nestjs-stripe.svg?style=svg">
-    <a href="https://codecov.io/gh/dhaspden/nestjs-stripe">
-      <img src="https://codecov.io/gh/dhaspden/nestjs-stripe/branch/master/graph/badge.svg" />
-    </a>
-  </p>
-  -->
 </p>
 
 ## Table Of Contents
