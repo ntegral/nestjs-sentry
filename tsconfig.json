@@ -11,7 +11,9 @@
         "sourceMap": false,
         "outDir": "./dist",
         "rootDir": "./lib",
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "moduleResolution": "node",
+        "allowJs": true
     },
     "include": [
         "lib/**/*"

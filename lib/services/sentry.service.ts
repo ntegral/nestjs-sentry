@@ -1,12 +1,10 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, Optional } from '@nestjs/common';
 import { Scope } from '@sentry/hub';
 import { Breadcrumb, Event, Severity, User, Options, Client } from '@sentry/types';
 import * as Sentry from '@sentry/node';
-import * as Integrations from '@sentry/node';
 
 import { SENTRY_MODULE_OPTIONS } from '../common/sentry.constants';
 import { SentryModuleOptions } from '../interfaces/sentry-options.interface';
-import { async } from 'rxjs/internal/scheduler/async';
 
 export interface ISentryService {
   /**
@@ -119,11 +117,16 @@ export class SentryService extends Logger {
     constructor(
         @Inject(SENTRY_MODULE_OPTIONS)
         private readonly options?: SentryModuleOptions,
+        @Optional() prior?: SentryService
       ) {
         super();
         if (!(options && options.dsn)) {
           // console.log('options not found. Did you use SentryModule.forRoot?');
           return;
+        }
+
+        if (prior) {
+          return prior;
         }
 
         Sentry.init({
@@ -149,7 +152,6 @@ export class SentryService extends Logger {
               //No callback he
           ]
         });
-        // console.log('sentry.io initialized', Sentry);
       }
 
   log(message: string, context?: string) {
@@ -197,8 +199,8 @@ export class SentryService extends Logger {
     try {
       Sentry.captureMessage(message, Sentry.Severity.Info);
       super.verbose(message, context);
-    } catch (err) {
-      console.error(message, err);
+    } catch (err) { 
+      console.error(message, err); 
     }
   }
 }

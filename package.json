@@ -7,7 +7,7 @@
     }
   ],
   "name": "@ntegral/nestjs-sentry",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Provides an injectable sentry.io client to provide enterprise logging nestjs modules",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -19,7 +19,11 @@
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf dist",
     "format": "prettier --write \"lib/**/*.ts\"",
-    "publish:npm": "npm publish --access public"
+    "publish:npm": "npm publish --access public",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
   },
   "keywords": [
     "nestjs",
@@ -51,10 +55,14 @@
     "@nestjs/common": "^6.5.3",
     "@nestjs/core": "^6.5.3",
     "@nestjs/testing": "^6.5.3",
+    "@types/jest": "^24.0.22",
     "@types/node": "^12.6.8",
+    "codecov": "^3.6.1",
+    "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.2",
+    "ts-jest": "^24.1.0",
     "typescript": "^3.5.3"
   },
   "dependencies": {

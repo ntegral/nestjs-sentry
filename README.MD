@@ -1,3 +1,7 @@
+[![npm version](http://img.shields.io/npm/v/@ntegral/nestjs-sentry.svg?style=flat)](https://npmjs.org/package/@ntegral/nestjs-sentry "View this project on npm")
+[![Codecov Coverage](https://img.shields.io/codecov/c/github/ntegral/nestjs-sentry/master.svg?style=flat-square)](https://codecov.io/gh/ntegral/nestjs-sentry)
+[![ISC license](http://img.shields.io/badge/license-ISC-brightgreen.svg)](http://opensource.org/licenses/ISC)
+
 <p align="center">
   <h3 align="center">
     @ntegral/nestjs-sentry
@@ -109,7 +113,7 @@ make sure to follow the below guidelines before getting your hands dirty.
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the ISC License. See `LICENSE` for more information.
 
 ## Acknowledgements
 
