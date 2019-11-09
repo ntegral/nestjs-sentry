@@ -7,7 +7,7 @@ import { SENTRY_TOKEN } from "../common/sentry.constants";
 
 describe('SentryService', () => {
     let config: SentryModuleOptions = {
-        dsn: 'https://sentry.io.dsn@sentry.io/#value',
+        dsn: 'https://5bdf73a4da744fe1b3b6e13559bc8f6b@sentry.io/1513038',
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
@@ -109,7 +109,7 @@ describe('SentryService', () => {
             expect(sentry).toBeDefined();
             expect(sentry).toBeInstanceOf(SentryService);
             // console.log('sentry', sentry);
-            sentry.debug('sentry:warn','context:warn');
+            sentry.warn('sentry:warn','context:warn');
             expect(sentry.warn).toBeInstanceOf(Function);
         });
     });
