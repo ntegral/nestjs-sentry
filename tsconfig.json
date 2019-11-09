@@ -13,7 +13,6 @@
         "rootDir": "./lib",
         "skipLibCheck": true,
         "moduleResolution": "node",
-        "allowJs": true
     },
     "include": [
         "lib/**/*"

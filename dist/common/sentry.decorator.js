@@ -6,3 +6,4 @@ function InjectSentry() {
     return common_1.Inject(sentry_constants_1.SENTRY_TOKEN);
 }
 exports.InjectSentry = InjectSentry;
+//# sourceMappingURL=sentry.decorator.js.map

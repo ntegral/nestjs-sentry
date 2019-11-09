@@ -6,3 +6,4 @@ function createSentryClient(options) {
     return sentry;
 }
 exports.createSentryClient = createSentryClient;
+//# sourceMappingURL=sentry.util.js.map

@@ -28,3 +28,4 @@ SentryModule = SentryModule_1 = __decorate([
     common_1.Module({})
 ], SentryModule);
 exports.SentryModule = SentryModule;
+//# sourceMappingURL=sentry.module.js.map

@@ -9,3 +9,4 @@ function createSentryProviders(options) {
     };
 }
 exports.createSentryProviders = createSentryProviders;
+//# sourceMappingURL=sentry.providers.js.map

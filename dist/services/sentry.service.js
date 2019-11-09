@@ -27,7 +27,7 @@ class SentryBaseService extends common_1.Logger {
 }
 exports.SentryBaseService = SentryBaseService;
 let SentryService = class SentryService extends common_1.Logger {
-    constructor(options) {
+    constructor(options, prior) {
         super();
         this.options = options;
         this.app = '@ntegral/nestjs-sentry: ';
@@ -43,8 +43,6 @@ let SentryService = class SentryService extends common_1.Logger {
             integrations: [
                 new Sentry.Integrations.OnUncaughtException({
                     onFatalError: (err) => __awaiter(this, void 0, void 0, function* () {
-                        console.error('uncaughtException, not cool!');
-                        console.error(err);
                         if (err.name === 'SentryError') {
                         }
                         else {
@@ -64,7 +62,6 @@ let SentryService = class SentryService extends common_1.Logger {
             super.log(message, context);
         }
         catch (err) {
-            console.error(message, err);
         }
     }
     error(message, trace, context) {
@@ -74,7 +71,6 @@ let SentryService = class SentryService extends common_1.Logger {
             super.error(message, trace, context);
         }
         catch (err) {
-            console.error(message, err);
         }
     }
     warn(message, context) {
@@ -84,7 +80,6 @@ let SentryService = class SentryService extends common_1.Logger {
             super.warn(message, context);
         }
         catch (err) {
-            console.error(message, err);
         }
     }
     debug(message, context) {
@@ -94,7 +89,6 @@ let SentryService = class SentryService extends common_1.Logger {
             super.debug(message, context);
         }
         catch (err) {
-            console.error(message, err);
         }
     }
     verbose(message, context) {
@@ -104,13 +98,14 @@ let SentryService = class SentryService extends common_1.Logger {
             super.verbose(message, context);
         }
         catch (err) {
-            console.error(message, err);
         }
     }
 };
 SentryService = __decorate([
     common_1.Injectable(),
     __param(0, common_1.Inject(sentry_constants_1.SENTRY_MODULE_OPTIONS)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, common_1.Optional()),
+    __metadata("design:paramtypes", [Object, SentryService])
 ], SentryService);
 exports.SentryService = SentryService;
+//# sourceMappingURL=sentry.service.js.map
