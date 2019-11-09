@@ -8,7 +8,7 @@ import { SENTRY_TOKEN } from './common/sentry.constants';
 
 describe('SentryModule', () => {
     let config: SentryModuleOptions = {
-        dsn: 'https://5bdf73a4da744fe1b3b6e13559bc8f6b@sentry.io/1513038',
+        dsn: 'https://your-sentry-urn@sentry.io/#value',
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
