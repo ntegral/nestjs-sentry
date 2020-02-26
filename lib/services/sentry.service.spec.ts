@@ -7,17 +7,64 @@ import { SENTRY_TOKEN } from "../common/sentry.constants";
 
 describe('SentryService', () => {
     let config: SentryModuleOptions = {
-        dsn: 'https://your-sentry-urn@sentry.io/#value',
+        dsn: 'https://sentry_io_dsn@sentry.io/1512744',
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
-    }
+    };
+
+    let failureConfig: SentryModuleOptions = {
+        dsn: 'https://sentry_io_dsn@sentry.io/1512744',
+        debug: true,
+        environment: 'development',
+        logLevel: LogLevel.Debug,
+    };
 
     class TestService implements SentryOptionsFactory {
         createSentryModuleOptions(): SentryModuleOptions {
             return config;
         }
     }
+
+    class FailureService implements SentryOptionsFactory {
+        createSentryModuleOptions(): SentryModuleOptions {
+            return failureConfig;
+        }
+    }
+
+    /* describe('sentry.integrations', () => {
+        it('should cause Sentry.Integrations.OnUncaughtException', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRoot(failureConfig)
+                ]
+            }).compile();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            console.log('inside failure');
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+        })
+    }) */
+
+    describe('sentry.log:error', () => {
+        it('should provide the sentry client and call log', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRootAsync({
+                        useClass: FailureService
+                    })
+                ]
+            }).compile();
+
+            const fail = mod.get<SentryService>(SENTRY_TOKEN);
+            /// expect(sentry).toBeDefined();
+            // expect(sentry).toBeInstanceOf(SentryService);
+            console.log('sentry:error', fail);
+            fail.log('sentry:log');
+            expect(fail.log).toBeInstanceOf(Function);
+        });
+    });
 
     describe('sentry.log', () => {
         it('should provide the sentry client and call log', async() => {

@@ -1,1 +1,1 @@
-export declare function InjectSentry(): (target: Object, key: string | symbol, index?: number | undefined) => void;
+export declare function InjectSentry(): (target: object, key: string | symbol, index?: number | undefined) => void;

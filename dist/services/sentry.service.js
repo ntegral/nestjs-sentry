@@ -12,10 +12,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -42,16 +43,17 @@ let SentryService = class SentryService extends common_1.Logger {
             logLevel: options.logLevel,
             integrations: [
                 new Sentry.Integrations.OnUncaughtException({
-                    onFatalError: (err) => __awaiter(this, void 0, void 0, function* () {
+                    onFatalError: ((err) => __awaiter(this, void 0, void 0, function* () {
                         if (err.name === 'SentryError') {
+                            console.log(err);
                         }
                         else {
-                            yield Sentry.getCurrentHub().getClient().captureException(err);
+                            Sentry.getCurrentHub().getClient().captureException(err);
                             process.exit(1);
                         }
-                    }),
+                    })),
                 }),
-                new Sentry.Integrations.OnUnhandledRejection()
+                new Sentry.Integrations.OnUnhandledRejection({ mode: 'warn' })
             ]
         });
     }
@@ -61,8 +63,7 @@ let SentryService = class SentryService extends common_1.Logger {
             Sentry.captureMessage(message, Sentry.Severity.Log);
             super.log(message, context);
         }
-        catch (err) {
-        }
+        catch (err) { }
     }
     error(message, trace, context) {
         message = `${this.app} ${message}`;
@@ -70,8 +71,7 @@ let SentryService = class SentryService extends common_1.Logger {
             Sentry.captureMessage(message, Sentry.Severity.Error);
             super.error(message, trace, context);
         }
-        catch (err) {
-        }
+        catch (err) { }
     }
     warn(message, context) {
         message = `${this.app} ${message}`;
@@ -79,8 +79,7 @@ let SentryService = class SentryService extends common_1.Logger {
             Sentry.captureMessage(message, Sentry.Severity.Warning);
             super.warn(message, context);
         }
-        catch (err) {
-        }
+        catch (err) { }
     }
     debug(message, context) {
         message = `${this.app} ${message}`;
@@ -88,8 +87,7 @@ let SentryService = class SentryService extends common_1.Logger {
             Sentry.captureMessage(message, Sentry.Severity.Debug);
             super.debug(message, context);
         }
-        catch (err) {
-        }
+        catch (err) { }
     }
     verbose(message, context) {
         message = `${this.app} ${message}`;
@@ -97,8 +95,10 @@ let SentryService = class SentryService extends common_1.Logger {
             Sentry.captureMessage(message, Sentry.Severity.Info);
             super.verbose(message, context);
         }
-        catch (err) {
-        }
+        catch (err) { }
+    }
+    instance() {
+        return Sentry;
     }
 };
 SentryService = __decorate([

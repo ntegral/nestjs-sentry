@@ -29,19 +29,13 @@ export class SentryService extends Logger {
           logLevel: options.logLevel,
           integrations: [
             new Sentry.Integrations.OnUncaughtException({
-              onFatalError: async (err) => {
+              onFatalError: (async (err) => {
                 // console.error('uncaughtException, not cool!')
                 // console.error(err);
-                if (err.name === 'SentryError') {
-                  //ignore
-                } else {
-                  await (Sentry.getCurrentHub().getClient<Client<Options>>() as Client<Options>).captureException(err);
-                  process.exit(1);
-                }
-              },
+                if (err.name === 'SentryError') { console.log(err); } else { (Sentry.getCurrentHub().getClient<Client<Options>>() as Client<Options>).captureException(err); process.exit(1); }
+              }),
             }),
-            new Sentry.Integrations.OnUnhandledRejection()
-              //No callback he
+            new Sentry.Integrations.OnUnhandledRejection({mode: 'warn'})
           ]
         });
       }
@@ -51,9 +45,7 @@ export class SentryService extends Logger {
     try {
       Sentry.captureMessage(message, Sentry.Severity.Log);
       super.log(message, context);
-    } catch (err) {
-      // console.error(message, err);
-    }
+    } catch (err) {  }
   }
 
   error(message: string, trace?: string, context?: string) {
@@ -61,9 +53,7 @@ export class SentryService extends Logger {
     try {
       Sentry.captureMessage(message, Sentry.Severity.Error);
       super.error(message, trace, context);
-    } catch (err) {
-      // console.error(message, err);
-    }
+    } catch (err) {  }
   }
 
   warn(message: string, context?: string) {
@@ -71,9 +61,7 @@ export class SentryService extends Logger {
     try {
       Sentry.captureMessage(message, Sentry.Severity.Warning);
       super.warn(message, context);
-    } catch (err) {
-      // console.error(message, err);
-    }
+    } catch (err) {  }
   }
 
   debug(message: string, context?: string) {
@@ -81,9 +69,7 @@ export class SentryService extends Logger {
     try {
       Sentry.captureMessage(message, Sentry.Severity.Debug);
       super.debug(message, context);
-    } catch (err) {
-      // console.error(message, err);
-    }
+    } catch (err) {  }
   }
 
   verbose(message: string, context?: string) {
@@ -91,8 +77,10 @@ export class SentryService extends Logger {
     try {
       Sentry.captureMessage(message, Sentry.Severity.Info);
       super.verbose(message, context);
-    } catch (err) { 
-      // console.error(message, err); 
-    }
+    } catch (err) {  }
+  }
+
+  instance() {
+    return Sentry;
   }
 }

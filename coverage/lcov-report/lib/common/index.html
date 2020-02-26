@@ -1,5 +1,7 @@
+
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>Code coverage report for lib/common</title>
     <meta charset="utf-8" />
@@ -12,40 +14,48 @@
         }
     </style>
 </head>
+    
 <body>
 <div class='wrapper'>
-  <div class='pad1'>
-    <h1>
-      <a href="../../index.html">All files</a> lib/common
-    </h1>
-    <div class='clearfix'>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Statements</span>
-        <span class='fraction'>6/6</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Functions</span>
-        <span class='fraction'>1/1</span>
-      </div>
-      <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
-        <span class="quiet">Lines</span>
-        <span class='fraction'>6/6</span>
-      </div>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> lib/common</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>10/10</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>2/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>10/10</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
     </div>
-    <p class="quiet">
-      Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
-    </p>
-  </div>
-  <div class='status-line high'></div>
-<div class="pad1">
+    <div class='status-line high'></div>
+    <div class="pad1">
 <table class="coverage-summary">
 <thead>
 <tr>
@@ -63,7 +73,9 @@
 </thead>
 <tbody><tr>
 	<td class="file high" data-value="sentry.constants.ts"><a href="sentry.constants.ts.html">sentry.constants.ts</a></td>
-	<td data-value="100" class="pic high"><div class="chart"><div class="cover-fill cover-full" style="width: 100%;"></div><div class="cover-empty" style="width:0%;"></div></div></td>
+	<td data-value="100" class="pic high">
+	<div class="chart"><div class="cover-fill cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+	</td>
 	<td data-value="100" class="pct high">100%</td>
 	<td data-value="2" class="abs high">2/2</td>
 	<td data-value="100" class="pct high">100%</td>
@@ -75,8 +87,25 @@
 	</tr>
 
 <tr>
+	<td class="file high" data-value="sentry.decorator.ts"><a href="sentry.decorator.ts.html">sentry.decorator.ts</a></td>
+	<td data-value="100" class="pic high">
+	<div class="chart"><div class="cover-fill cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+	</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="4" class="abs high">4/4</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">0/0</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">1/1</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="4" class="abs high">4/4</td>
+	</tr>
+
+<tr>
 	<td class="file high" data-value="sentry.util.ts"><a href="sentry.util.ts.html">sentry.util.ts</a></td>
-	<td data-value="100" class="pic high"><div class="chart"><div class="cover-fill cover-full" style="width: 100%;"></div><div class="cover-empty" style="width:0%;"></div></div></td>
+	<td data-value="100" class="pic high">
+	<div class="chart"><div class="cover-fill cover-full" style="width: 100%"></div><div class="cover-empty" style="width: 0%"></div></div>
+	</td>
 	<td data-value="100" class="pct high">100%</td>
 	<td data-value="4" class="abs high">4/4</td>
 	<td data-value="100" class="pct high">100%</td>
@@ -89,22 +118,23 @@
 
 </tbody>
 </table>
-</div><div class='push'></div><!-- for sticky footer -->
-</div><!-- /wrapper -->
-<div class='footer quiet pad2 space-top1 center small'>
-  Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Nov 09 2019 01:27:14 GMT-0500 (Eastern Standard Time)
 </div>
-</div>
-<script src="../../prettify.js"></script>
-<script>
-window.onload = function () {
-        if (typeof prettyPrint === 'function') {
-            prettyPrint();
-        }
-};
-</script>
-<script src="../../sorter.js"></script>
-<script src="../../block-navigation.js"></script>
-</body>
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
+                at Tue Feb 25 2020 21:28:08 GMT-0500 (Eastern Standard Time)
+            </div>
+        </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
 </html>
+    
