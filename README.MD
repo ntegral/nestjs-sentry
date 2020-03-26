@@ -93,8 +93,8 @@ import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
 @Injectable()
 export class AppService {
   public constructor(@InjectSentry() private readonly client: SentryService) {
-      client.captureMessage(message, Sentry.Severity.Log);
-      client.captureException(exception);
+      client.instance().captureMessage(message, Sentry.Severity.Log);
+      client.instance().captureException(exception);
       ... and more
   }
 }
