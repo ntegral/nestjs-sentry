@@ -7,14 +7,14 @@ import { SENTRY_TOKEN } from "../common/sentry.constants";
 
 describe('SentryService', () => {
     let config: SentryModuleOptions = {
-        dsn: 'https://sentry_io_dsn@sentry.io/1512744',
+        dsn: 'https://sentry_io_dsn@sentry.io/1512xxx',
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
     };
 
     let failureConfig: SentryModuleOptions = {
-        dsn: 'https://sentry_io_dsn@sentry.io/1512744',
+        dsn: 'https://sentry_io_dsn@sentry.io/1512xxx',
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
