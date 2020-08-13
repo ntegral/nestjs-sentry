@@ -47,7 +47,7 @@ import { SentryModule } from '@ntegral/nestjs-sentry';
   imports: [
     SentryModule.forRoot({
       dsn: 'sentry_io_dsn',
-      debug: true | false
+      debug: true | false,
       environment: 'dev' | 'production' | 'some_environment',
       release: 'some_release', | null, // must create a release in sentry.io dashboard
       logLevel: LogLevel.Debug //based on sentry.io loglevel //
@@ -71,7 +71,7 @@ import { ConfigService } from '@ntegral/nestjs-config';
       imports: [ConfigModule],
       useFactory: async (cfg:ConfigService) => ({
         dsn: cfg.get('SENTRY_DSN'),
-        debug: true | false
+        debug: true | false,
         environment: 'dev' | 'production' | 'some_environment',
         release: 'some_release', | null, // must create a release in sentry.io dashboard
         logLevel: LogLevel.Debug //based on sentry.io loglevel //
