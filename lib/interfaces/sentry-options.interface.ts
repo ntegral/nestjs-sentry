@@ -1,13 +1,9 @@
 import { ModuleMetadata, Type } from "@nestjs/common/interfaces";
-import { LogLevel } from '@sentry/types';
+import { Integration, Options } from '@sentry/types';
 
-export interface SentryModuleOptions {
-    dsn: string;
-    debug: boolean;
-    environment?: string;
-    release?: string;
-    logLevel?: LogLevel
-}
+export type SentryModuleOptions = Omit<Options, 'integrations'> & {
+    integrations?: Integration[];
+};
 
 export interface SentryOptionsFactory {
     createSentryModuleOptions(): Promise<SentryModuleOptions> | SentryModuleOptions;

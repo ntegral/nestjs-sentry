@@ -21,12 +21,10 @@ export class SentryService extends Logger {
           return;
         }
 
+        const { debug, integrations = [], ...sentryOptions } = options;
         Sentry.init({
-          dsn: options.dsn,
-          debug: options.debug === true ? false : options.debug,
-          environment: options.environment,
-          release: options.release,
-          logLevel: options.logLevel,
+          ...sentryOptions,
+          debug: debug === true ? false : debug,
           integrations: [
             new Sentry.Integrations.OnUncaughtException({
               onFatalError: (async (err) => {
@@ -35,7 +33,8 @@ export class SentryService extends Logger {
                 if (err.name === 'SentryError') { console.log(err); } else { (Sentry.getCurrentHub().getClient<Client<Options>>() as Client<Options>).captureException(err); process.exit(1); }
               }),
             }),
-            new Sentry.Integrations.OnUnhandledRejection({mode: 'warn'})
+            new Sentry.Integrations.OnUnhandledRejection({mode: 'warn'}),
+            ...integrations
           ]
         });
       }
