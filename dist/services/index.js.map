@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"/","sources":["services/index.ts"],"names":[],"mappings":";;;;;AAAA,sCAAiC","sourcesContent":["export * from './sentry.service';"]}
+{"version":3,"file":"index.js","sourceRoot":"/","sources":["services/index.ts"],"names":[],"mappings":";;;;;AAAA,sCAAiC;AACjC,0CAAqC","sourcesContent":["export * from './sentry.service';\r\nexport * from './sentry.interceptor';"]}

@@ -20,6 +20,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const Sentry = require("@sentry/node");
@@ -35,13 +46,8 @@ let SentryService = class SentryService extends common_1.Logger {
         if (!(options && options.dsn)) {
             return;
         }
-        Sentry.init({
-            dsn: options.dsn,
-            debug: options.debug === true ? false : options.debug,
-            environment: options.environment,
-            release: options.release,
-            logLevel: options.logLevel,
-            integrations: [
+        const { debug, integrations = [] } = options, sentryOptions = __rest(options, ["debug", "integrations"]);
+        Sentry.init(Object.assign(Object.assign({}, sentryOptions), { debug: debug === true ? false : debug, integrations: [
                 new Sentry.Integrations.OnUncaughtException({
                     onFatalError: ((err) => __awaiter(this, void 0, void 0, function* () {
                         if (err.name === 'SentryError') {
@@ -53,9 +59,9 @@ let SentryService = class SentryService extends common_1.Logger {
                         }
                     })),
                 }),
-                new Sentry.Integrations.OnUnhandledRejection({ mode: 'warn' })
-            ]
-        });
+                new Sentry.Integrations.OnUnhandledRejection({ mode: 'warn' }),
+                ...integrations
+            ] }));
     }
     log(message, context) {
         message = `${this.app} ${message}`;

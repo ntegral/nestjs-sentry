@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"/","sources":["interfaces/index.ts"],"names":[],"mappings":"","sourcesContent":["export * from './sentry-options.interface';\nexport * from './sentry-service.interface';\nexport * from './sentry.interface';"]}
+{"version":3,"file":"index.js","sourceRoot":"/","sources":["interfaces/index.ts"],"names":[],"mappings":"","sourcesContent":["export * from './sentry-options.interface';\r\nexport * from './sentry-service.interface';\r\nexport * from './sentry.interface';"]}
