@@ -1,6 +1,6 @@
 import { Module, DynamicModule } from '@nestjs/common';
 import { SentryCoreModule } from './sentry-core.module';
-import { SentryModuleOptions, SentryModuleAsyncOptions } from './interfaces/sentry-options.interface';
+import { SentryModuleOptions, SentryModuleAsyncOptions } from './sentry.interfaces';
 
 @Module({})
 export class SentryModule {

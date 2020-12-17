@@ -1,22 +1,21 @@
 import {
-    Module,
-    Global,
-    Provider,
-    Type,
-    DynamicModule,
-  } from '@nestjs/common';
-  import {
-    SentryModuleAsyncOptions,
-    SentryOptionsFactory,
-    SentryModuleOptions,
-  } from './interfaces/sentry-options.interface';
-  import {
-    SENTRY_MODULE_OPTIONS,
-    SENTRY_TOKEN,
-  } from './common/sentry.constants';
-import { SentryService } from './services/sentry.service';
-import { createSentryClient } from './common/sentry.util';
-import { createSentryProviders } from './providers/sentry.providers';
+  Module,
+  Global,
+  Provider,
+  Type,
+  DynamicModule,
+} from '@nestjs/common';
+import {
+  SentryModuleAsyncOptions,
+  SentryOptionsFactory,
+  SentryModuleOptions,
+} from './sentry.interfaces';
+import {
+  SENTRY_MODULE_OPTIONS,
+  SENTRY_TOKEN,
+} from './sentry.constants';
+import { SentryService } from './sentry.service';
+import { createSentryProviders } from './sentry.providers';
 
 @Global()
 @Module({})
@@ -38,8 +37,7 @@ export class SentryCoreModule {
         const provider: Provider = {
             inject: [SENTRY_MODULE_OPTIONS],
             provide: SENTRY_TOKEN,
-            useFactory: (options: SentryModuleOptions) =>
-                createSentryClient(options),
+            useFactory: (options: SentryModuleOptions) => new SentryService(options),
         };
 
         return {

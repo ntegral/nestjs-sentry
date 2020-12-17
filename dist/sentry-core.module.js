@@ -17,10 +17,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var SentryCoreModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
-const sentry_constants_1 = require("./common/sentry.constants");
-const sentry_service_1 = require("./services/sentry.service");
-const sentry_util_1 = require("./common/sentry.util");
-const sentry_providers_1 = require("./providers/sentry.providers");
+const sentry_constants_1 = require("./sentry.constants");
+const sentry_service_1 = require("./sentry.service");
+const sentry_providers_1 = require("./sentry.providers");
 let SentryCoreModule = SentryCoreModule_1 = class SentryCoreModule {
     static forRoot(options) {
         const provider = sentry_providers_1.createSentryProviders(options);
@@ -34,7 +33,7 @@ let SentryCoreModule = SentryCoreModule_1 = class SentryCoreModule {
         const provider = {
             inject: [sentry_constants_1.SENTRY_MODULE_OPTIONS],
             provide: sentry_constants_1.SENTRY_TOKEN,
-            useFactory: (options) => sentry_util_1.createSentryClient(options),
+            useFactory: (options) => new sentry_service_1.SentryService(options),
         };
         return {
             exports: [provider, sentry_service_1.SentryService],
