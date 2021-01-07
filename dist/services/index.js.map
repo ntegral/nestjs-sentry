@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"/","sources":["services/index.ts"],"names":[],"mappings":";;;;;AAAA,sCAAiC","sourcesContent":["export * from './sentry.service';"]}

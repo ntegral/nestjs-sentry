@@ -1,0 +1,1 @@
+{"version":3,"file":"sentry.constants.js","sourceRoot":"/","sources":["sentry.constants.ts"],"names":[],"mappings":";;AAAa,QAAA,qBAAqB,GAAG,qBAAqB,CAAC;AAC9C,QAAA,YAAY,GAAG,aAAa,CAAC","sourcesContent":["export const SENTRY_MODULE_OPTIONS = 'SentryModuleOptions';\nexport const SENTRY_TOKEN = 'SentryToken';"]}
