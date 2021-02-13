@@ -7,7 +7,7 @@
     }
   ],
   "name": "@ntegral/nestjs-sentry",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "Provides an injectable sentry.io client to provide enterprise logging nestjs modules",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -32,8 +32,8 @@
   "author": "Dexter Hardy",
   "license": "ISC",
   "peerDependencies": {
-    "@nestjs/common": "7.6.1",
-    "@nestjs/core": "7.6.1",
+    "@nestjs/common": "^7.6.12",
+    "@nestjs/core": "^7.6.12",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4"
   },
@@ -52,7 +52,7 @@
     "testEnvironment": "node"
   },
   "devDependencies": {
-    "@nestjs/testing": "^7.4.2",
+    "@nestjs/testing": "^7.6.12",
     "@types/jest": "^25.1.4",
     "@types/node": "^13.7.5",
     "@types/supertest": "^2.0.8",
@@ -65,10 +65,8 @@
     "typescript": "^3.8.2"
   },
   "dependencies": {
-    "@nestjs/core": "^7.4.2",
-    "@nestjs/common": "^7.4.2",
-    "@nestjs/graphql": "^7.9.1",
-    "@sentry/node": "^5.12.4",
+    "@nestjs/graphql": "^7.9.8",
+    "@sentry/node": "^6.1.0",
     "rxjs": "^6.5.4"
   }
 }
