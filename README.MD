@@ -32,8 +32,13 @@ do any extra work outside of the initial setup.
 ## Installation
 
 ```bash
-npm install --save @ntegral/nestjs-sentry
+npm install --save @ntegral/nestjs-sentry @sentry/node
 ```
+
+## Github Sample Project using @ntegral/nestjs-sentry
+
+The following project was created as a sample starter project to get you going... (if needed...).
+- [@ntegral/nestjs-sentry sample](https://github.com/ntegral/nestjs-sentry-example)
 
 ## Getting Started
 
@@ -42,6 +47,7 @@ The simplest way to use `@ntegral/nestjs-sentry` is to use `SentryModule.forRoot
 ```typescript
 import { Module } from '@nestjs-common';
 import { SentryModule } from '@ntegral/nestjs-sentry';
+import { LogLevel } from '@sentry/types';
 
 @Module({
   imports: [
@@ -99,6 +105,14 @@ export class AppService {
       ... and more
   }
 }
+```
+
+## Interceptors
+
+BREAKING CHANGES: The SentryInterceptor can be used in projects that don't require GraphQL. If you will be needed GraphQL support, use the GraphqlInterceptor.  Using the GraphqlInterceptor will create a dependancy for the @nestjs/graphql package.
+
+```bash
+npm install --save @nestjs/graphql
 ```
 
 ## Contributing
