@@ -14,28 +14,28 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
-const node_1 = require("@sentry/node");
 const sentry_decorator_1 = require("./sentry.decorator");
 const sentry_service_1 = require("./sentry.service");
-let SentryInterceptor = class SentryInterceptor {
-    constructor(client, options) {
+const graphql_1 = require("@nestjs/graphql");
+const node_1 = require("@sentry/node");
+let Graphqlnterceptor = class Graphqlnterceptor {
+    constructor(client) {
         this.client = client;
-        this.options = options;
     }
     intercept(context, next) {
         return next.handle().pipe(operators_1.tap(null, (exception) => {
-            if (this.shouldReport(exception)) {
-                this.client.instance().withScope((scope) => {
-                    switch (context.getType()) {
-                        case 'http':
-                            return this.captureHttpException(scope, context.switchToHttp(), exception);
-                        case 'rpc':
-                            return this.captureRpcException(scope, context.switchToRpc(), exception);
-                        case 'ws':
-                            return this.captureWsException(scope, context.switchToWs(), exception);
-                    }
-                });
-            }
+            this.client.instance().withScope((scope) => {
+                switch (context.getType()) {
+                    case 'http':
+                        return this.captureHttpException(scope, context.switchToHttp(), exception);
+                    case 'rpc':
+                        return this.captureRpcException(scope, context.switchToRpc(), exception);
+                    case 'ws':
+                        return this.captureWsException(scope, context.switchToWs(), exception);
+                    case 'graphql':
+                        return this.captureGraphqlException(scope, graphql_1.GqlExecutionContext.create(context), exception);
+                }
+            });
         }));
     }
     captureHttpException(scope, http, exception) {
@@ -56,27 +56,25 @@ let SentryInterceptor = class SentryInterceptor {
         scope.setExtra('ws_data', ws.getData());
         this.client.instance().captureException(exception);
     }
-    shouldReport(exception) {
-        if (this.options && !this.options.filters)
-            return true;
-        if (this.options) {
-            const opts = this.options;
-            if (opts.filters) {
-                let filters = opts.filters;
-                return filters.every(({ type, filter }) => {
-                    return !(exception instanceof type && (!filter || filter(exception)));
-                });
-            }
+    captureGraphqlException(scope, gqlContext, exception) {
+        const info = gqlContext.getInfo();
+        const context = gqlContext.getContext();
+        scope.setExtra('type', info.parentType.name);
+        if (context.req) {
+            const data = node_1.Handlers.parseRequest({}, context.req, {});
+            scope.setExtra('req', data.request);
+            if (data.extra)
+                scope.setExtras(data.extra);
+            if (data.user)
+                scope.setUser(data.user);
         }
-        else {
-            return true;
-        }
+        this.client.instance().captureException(exception);
     }
 };
-SentryInterceptor = __decorate([
+Graphqlnterceptor = __decorate([
     common_1.Injectable(),
     __param(0, sentry_decorator_1.InjectSentry()),
-    __metadata("design:paramtypes", [sentry_service_1.SentryService, Object])
-], SentryInterceptor);
-exports.SentryInterceptor = SentryInterceptor;
-//# sourceMappingURL=sentry.interceptor.js.map
+    __metadata("design:paramtypes", [sentry_service_1.SentryService])
+], Graphqlnterceptor);
+exports.Graphqlnterceptor = Graphqlnterceptor;
+//# sourceMappingURL=graphql.interceptor.js.map

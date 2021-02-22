@@ -8,9 +8,9 @@ import {
 import { 
   HttpArgumentsHost,
   WsArgumentsHost,
-  RpcArgumentsHost
+  RpcArgumentsHost,
+  ContextType
 } from '@nestjs/common/interfaces';
-import {  GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 // Rxjs imports
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -20,45 +20,45 @@ import { Handlers } from '@sentry/node';
 
 import { InjectSentry } from './sentry.decorator';
 import { SentryService } from './sentry.service';
+import { SentryInterceptorOptions, SentryInterceptorOptionsFilter } from './sentry.interfaces';
 
 
 @Injectable()
 export class SentryInterceptor implements NestInterceptor {
 
-  constructor(@InjectSentry() private readonly client: SentryService) {}
+  constructor(
+    @InjectSentry() private readonly client: SentryService,
+    private readonly options?: SentryInterceptorOptions
+  ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     // first param would be for events, second is for errors
     return next.handle().pipe(
       tap(null, (exception) => {
-        this.client.instance().withScope((scope) => {
-          switch (context.getType<GqlContextType>()) {
-            case 'http':
-              return this.captureHttpException(
-                scope, 
-                context.switchToHttp(), 
-                exception
-              );
-            case 'rpc':
-              return this.captureRpcException(
-                scope,
-                context.switchToRpc(),
-                exception,
-              );
-            case 'ws':
-              return this.captureWsException(
-                scope,
-                context.switchToWs(),
-                exception,
-              );
-            case 'graphql':
-              return this.captureGraphqlException(
-                scope, 
-                GqlExecutionContext.create(context), 
-                exception
-              );
-          }
-        })
+        if(this.shouldReport(exception)) {
+          this.client.instance().withScope((scope) => {
+            switch (context.getType<ContextType>()) {
+              case 'http':
+                return this.captureHttpException(
+                  scope, 
+                  context.switchToHttp(), 
+                  exception
+                );
+              case 'rpc':
+                return this.captureRpcException(
+                  scope,
+                  context.switchToRpc(),
+                  exception,
+                );
+              case 'ws':
+                return this.captureWsException(
+                  scope,
+                  context.switchToWs(),
+                  exception,
+                );
+            }
+          })
+        }
       })
     );
   }
@@ -95,22 +95,20 @@ export class SentryInterceptor implements NestInterceptor {
     this.client.instance().captureException(exception);
   }
 
-  private captureGraphqlException(scope: Scope, gqlContext: GqlExecutionContext, exception: any): void {
-    const info = gqlContext.getInfo()
-    const context = gqlContext.getContext() 
+  private shouldReport(exception: any) {
+    if (this.options && !this.options.filters) return true;
 
-    scope.setExtra('type', info.parentType.name)
-
-    if (context.req) {
-      // req within graphql context needs modification in 
-      const data = Handlers.parseRequest(<any>{}, context.req, {});
-
-      scope.setExtra('req', data.request);
-
-      if (data.extra) scope.setExtras(data.extra);
-      if (data.user) scope.setUser(data.user);
-   }
-
-    this.client.instance().captureException(exception);
+    // If all filters pass, then we do not report
+    if (this.options) {
+      const opts: SentryInterceptorOptions = this.options as {}
+      if (opts.filters) {
+        let filters: SentryInterceptorOptionsFilter[] = opts.filters
+        return filters.every(({ type, filter }) => {
+          return !(exception instanceof type && (!filter || filter(exception)));
+        });
+      }
+    } else {
+      return true;
+    }
   }
 }
