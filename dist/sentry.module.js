@@ -7,6 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 var SentryModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SentryModule = void 0;
 const common_1 = require("@nestjs/common");
 const sentry_core_module_1 = require("./sentry-core.module");
 let SentryModule = SentryModule_1 = class SentryModule {

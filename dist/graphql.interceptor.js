@@ -12,13 +12,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GraphqlInterceptor = void 0;
 const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
 const sentry_decorator_1 = require("./sentry.decorator");
 const sentry_service_1 = require("./sentry.service");
 const graphql_1 = require("@nestjs/graphql");
 const node_1 = require("@sentry/node");
-let Graphqlnterceptor = class Graphqlnterceptor {
+let GraphqlInterceptor = class GraphqlInterceptor {
     constructor(client) {
         this.client = client;
     }
@@ -71,10 +72,10 @@ let Graphqlnterceptor = class Graphqlnterceptor {
         this.client.instance().captureException(exception);
     }
 };
-Graphqlnterceptor = __decorate([
+GraphqlInterceptor = __decorate([
     common_1.Injectable(),
     __param(0, sentry_decorator_1.InjectSentry()),
     __metadata("design:paramtypes", [sentry_service_1.SentryService])
-], Graphqlnterceptor);
-exports.Graphqlnterceptor = Graphqlnterceptor;
+], GraphqlInterceptor);
+exports.GraphqlInterceptor = GraphqlInterceptor;
 //# sourceMappingURL=graphql.interceptor.js.map

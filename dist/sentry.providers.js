@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createSentryProviders = void 0;
 const sentry_constants_1 = require("./sentry.constants");
 const sentry_service_1 = require("./sentry.service");
 function createSentryProviders(options) {

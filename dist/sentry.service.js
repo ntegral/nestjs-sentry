@@ -32,6 +32,7 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SentryService = void 0;
 const common_1 = require("@nestjs/common");
 const Sentry = require("@sentry/node");
 const sentry_constants_1 = require("./sentry.constants");

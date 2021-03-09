@@ -1,5 +1,4 @@
 import { Logger } from '@nestjs/common';
-import * as Sentry from '@sentry/node';
 import { SentryModuleOptions } from './sentry.interfaces';
 export declare class SentryService extends Logger {
     private readonly options?;
@@ -10,5 +9,5 @@ export declare class SentryService extends Logger {
     warn(message: string, context?: string): void;
     debug(message: string, context?: string): void;
     verbose(message: string, context?: string): void;
-    instance(): typeof Sentry;
+    instance(): any;
 }

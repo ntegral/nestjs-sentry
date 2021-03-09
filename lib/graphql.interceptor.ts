@@ -16,7 +16,7 @@ import { Scope } from '@sentry/hub';
 import { Handlers } from '@sentry/node';
 
 @Injectable()
-export class Graphqlnterceptor implements NestInterceptor {
+export class GraphqlInterceptor implements NestInterceptor {
 
     constructor(@InjectSentry() private readonly client: SentryService) { }
 
