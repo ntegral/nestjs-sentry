@@ -1,7 +1,7 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { tap } from "rxjs/operators";
-import { InjectSentry } from "./sentry.decorator";
+// import { InjectSentry } from "./sentry.decorator";
 import { SentryService } from "./sentry.service";
 
 import { 
@@ -16,9 +16,11 @@ import { Scope } from '@sentry/hub';
 import { Handlers } from '@sentry/node';
 
 @Injectable()
-export class Graphqlnterceptor implements NestInterceptor {
-
-    constructor(@InjectSentry() private readonly client: SentryService) { }
+export class GraphqlInterceptor implements NestInterceptor {
+    private client: SentryService = SentryService.SentryServiceInstance();
+    constructor(
+        // @InjectSentry() private readonly client: SentryService
+    ) { }
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         // first param would be for events, second is for errors

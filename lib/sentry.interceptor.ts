@@ -18,7 +18,7 @@ import { tap } from 'rxjs/operators';
 import { Scope } from '@sentry/hub';
 import { Handlers } from '@sentry/node';
 
-import { InjectSentry } from './sentry.decorator';
+// import { InjectSentry } from './sentry.decorator';
 import { SentryService } from './sentry.service';
 import { SentryInterceptorOptions, SentryInterceptorOptionsFilter } from './sentry.interfaces';
 
@@ -26,8 +26,9 @@ import { SentryInterceptorOptions, SentryInterceptorOptionsFilter } from './sent
 @Injectable()
 export class SentryInterceptor implements NestInterceptor {
 
+  private client: SentryService = SentryService.SentryServiceInstance()
   constructor(
-    @InjectSentry() private readonly client: SentryService,
+    //@InjectSentry() private readonly client: SentryService,
     private readonly options?: SentryInterceptorOptions
   ) {}
 

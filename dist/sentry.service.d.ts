@@ -4,7 +4,9 @@ import { SentryModuleOptions } from './sentry.interfaces';
 export declare class SentryService extends Logger {
     private readonly options?;
     app: string;
+    private static serviceInstance;
     constructor(options?: SentryModuleOptions | undefined, prior?: SentryService);
+    static SentryServiceInstance(): SentryService;
     log(message: string, context?: string): void;
     error(message: string, trace?: string, context?: string): void;
     warn(message: string, context?: string): void;

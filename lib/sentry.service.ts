@@ -8,6 +8,7 @@ import { SentryModuleOptions } from './sentry.interfaces';
 @Injectable()
 export class SentryService extends Logger {
     app: string = '@ntegral/nestjs-sentry: ';
+    private static serviceInstance: SentryService;
     constructor(
         @Inject(SENTRY_MODULE_OPTIONS)
         private readonly options?: SentryModuleOptions,
@@ -34,6 +35,13 @@ export class SentryService extends Logger {
           ]
         });
       }
+
+  public static SentryServiceInstance(): SentryService {
+    if (!SentryService.serviceInstance) {
+      SentryService.serviceInstance = new SentryService();
+    }
+    return SentryService.serviceInstance;
+  }
 
   log(message: string, context?: string) {
     message = `${this.app} ${message}`;

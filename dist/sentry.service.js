@@ -31,11 +31,12 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var SentryService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const Sentry = require("@sentry/node");
 const sentry_constants_1 = require("./sentry.constants");
-let SentryService = class SentryService extends common_1.Logger {
+let SentryService = SentryService_1 = class SentryService extends common_1.Logger {
     constructor(options, prior) {
         super();
         this.options = options;
@@ -59,6 +60,12 @@ let SentryService = class SentryService extends common_1.Logger {
                 new Sentry.Integrations.OnUnhandledRejection({ mode: 'warn' }),
                 ...integrations
             ] }));
+    }
+    static SentryServiceInstance() {
+        if (!SentryService_1.serviceInstance) {
+            SentryService_1.serviceInstance = new SentryService_1();
+        }
+        return SentryService_1.serviceInstance;
     }
     log(message, context) {
         message = `${this.app} ${message}`;
@@ -104,7 +111,7 @@ let SentryService = class SentryService extends common_1.Logger {
         return Sentry;
     }
 };
-SentryService = __decorate([
+SentryService = SentryService_1 = __decorate([
     common_1.Injectable(),
     __param(0, common_1.Inject(sentry_constants_1.SENTRY_MODULE_OPTIONS)),
     __param(1, common_1.Optional()),
