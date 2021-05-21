@@ -12,8 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
 const sentry_service_1 = require("./sentry.service");
-const graphql_1 = require("@nestjs/graphql");
 const node_1 = require("@sentry/node");
+let GqlExecutionContxt;
+try {
+    ({ GqlExecutionContxt } = require('@nestjs/graphql'));
+}
+catch (e) { }
 let GraphqlInterceptor = class GraphqlInterceptor {
     constructor() {
         this.client = sentry_service_1.SentryService.SentryServiceInstance();
@@ -29,7 +33,7 @@ let GraphqlInterceptor = class GraphqlInterceptor {
                     case 'ws':
                         return this.captureWsException(scope, context.switchToWs(), exception);
                     case 'graphql':
-                        return this.captureGraphqlException(scope, graphql_1.GqlExecutionContext.create(context), exception);
+                        return this.captureGraphqlException(scope, GqlExecutionContxt.create(context), exception);
                 }
             });
         }));
