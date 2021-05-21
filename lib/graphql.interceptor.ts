@@ -9,11 +9,18 @@ import {
     WsArgumentsHost,
     RpcArgumentsHost
   } from '@nestjs/common/interfaces';
-  import {  GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
+//import {  GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
+import type { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 
 // Sentry imports
 import { Scope } from '@sentry/hub';
 import { Handlers } from '@sentry/node';
+
+let GqlExecutionContxt: any;
+try {
+  ({ GqlExecutionContxt } = require('@nestjs/graphql'));
+} catch (e) {}
+
 
 @Injectable()
 export class GraphqlInterceptor implements NestInterceptor {
@@ -49,7 +56,8 @@ export class GraphqlInterceptor implements NestInterceptor {
                         case 'graphql':
                             return this.captureGraphqlException(
                                 scope,
-                                GqlExecutionContext.create(context),
+                                //GqlExecutionContext.create(context),
+                                GqlExecutionContxt.create(context),
                                 exception
                             );
                     }
