@@ -70,40 +70,64 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
     log(message, context) {
         message = `${this.app} ${message}`;
         try {
-            Sentry.captureMessage(message, Sentry.Severity.Log);
             super.log(message, context);
+            Sentry.addBreadcrumb({
+                message,
+                level: Sentry.Severity.Log,
+                data: {
+                    context
+                }
+            });
         }
         catch (err) { }
     }
     error(message, trace, context) {
         message = `${this.app} ${message}`;
         try {
-            Sentry.captureMessage(message, Sentry.Severity.Error);
             super.error(message, trace, context);
+            Sentry.captureMessage(message, Sentry.Severity.Error);
         }
         catch (err) { }
     }
     warn(message, context) {
         message = `${this.app} ${message}`;
         try {
-            Sentry.captureMessage(message, Sentry.Severity.Warning);
             super.warn(message, context);
+            Sentry.addBreadcrumb({
+                message,
+                level: Sentry.Severity.Warning,
+                data: {
+                    context
+                }
+            });
         }
         catch (err) { }
     }
     debug(message, context) {
         message = `${this.app} ${message}`;
         try {
-            Sentry.captureMessage(message, Sentry.Severity.Debug);
             super.debug(message, context);
+            Sentry.addBreadcrumb({
+                message,
+                level: Sentry.Severity.Debug,
+                data: {
+                    context
+                }
+            });
         }
         catch (err) { }
     }
     verbose(message, context) {
         message = `${this.app} ${message}`;
         try {
-            Sentry.captureMessage(message, Sentry.Severity.Info);
             super.verbose(message, context);
+            Sentry.addBreadcrumb({
+                message,
+                level: Sentry.Severity.Debug,
+                data: {
+                    context
+                }
+            });
         }
         catch (err) { }
     }
