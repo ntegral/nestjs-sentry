@@ -67,9 +67,5 @@
   },
   "optionalDependencies": {
     "@nestjs/graphql": "^7.9.9"
-  },
-  "volta": {
-    "node": "14.17.0",
-    "npm": "7.16.0"
   }
 }
