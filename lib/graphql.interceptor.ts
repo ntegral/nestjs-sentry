@@ -4,21 +4,21 @@ import { tap } from "rxjs/operators";
 // import { InjectSentry } from "./sentry.decorator";
 import { SentryService } from "./sentry.service";
 
-import { 
+import {
     HttpArgumentsHost,
     WsArgumentsHost,
     RpcArgumentsHost
   } from '@nestjs/common/interfaces';
-//import {  GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
-import type { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
+
+import type { GqlContextType, GqlExecutionContext as GqlExecutionContextTpe } from '@nestjs/graphql';
 
 // Sentry imports
 import { Scope } from '@sentry/hub';
 import { Handlers } from '@sentry/node';
 
-let GqlExecutionContxt: any;
+let GqlExecutionContext: any;
 try {
-  ({ GqlExecutionContxt } = require('@nestjs/graphql'));
+  ({ GqlExecutionContext } = require('@nestjs/graphql'));
 } catch (e) {}
 
 
@@ -56,8 +56,7 @@ export class GraphqlInterceptor implements NestInterceptor {
                         case 'graphql':
                             return this.captureGraphqlException(
                                 scope,
-                                //GqlExecutionContext.create(context),
-                                GqlExecutionContxt.create(context),
+                                GqlExecutionContext.create(context),
                                 exception
                             );
                     }
@@ -98,14 +97,14 @@ export class GraphqlInterceptor implements NestInterceptor {
         this.client.instance().captureException(exception);
     }
 
-    private captureGraphqlException(scope: Scope, gqlContext: GqlExecutionContext, exception: any): void {
+    private captureGraphqlException(scope: Scope, gqlContext: GqlExecutionContextTpe, exception: any): void {
         const info = gqlContext.getInfo()
         const context = gqlContext.getContext()
 
         scope.setExtra('type', info.parentType.name)
 
         if (context.req) {
-            // req within graphql context needs modification in 
+            // req within graphql context needs modification in
             const data = Handlers.parseRequest(<any>{}, context.req, {});
 
             scope.setExtra('req', data.request);
