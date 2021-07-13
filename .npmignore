@@ -1,0 +1,13 @@
+# source
+node_modules/
+lib/
+coverage/
+
+# config
+tsconfig.build.json
+tsconfig.json
+.prettierignore
+.prettierrc
+
+# log
+*.log
