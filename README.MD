@@ -115,6 +115,24 @@ BREAKING CHANGES: The SentryInterceptor can be used in projects that don't requi
 npm install --save @nestjs/graphql
 ```
 
+Using graphql interceptor globally
+```typescript
+import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { GraphqlInterceptor } from '@ntegral/nestjs-sentry';
+
+@Module({
+  ....
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: GraphqlInterceptor,
+    },
+  ],
+})
+export class AppModule {}
+```
+
 ## Contributing
 
 I would greatly appreciate any contributions to make this project better. Please

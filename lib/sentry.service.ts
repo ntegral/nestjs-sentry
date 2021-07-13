@@ -46,40 +46,69 @@ export class SentryService extends Logger {
   log(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      Sentry.captureMessage(message, Sentry.Severity.Log);
+      // Sentry.captureMessage(message, Sentry.Severity.Log);
       super.log(message, context);
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Log,
+        data: {
+          context
+        }
+      })
     } catch (err) {  }
   }
 
   error(message: string, trace?: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      Sentry.captureMessage(message, Sentry.Severity.Error);
+      // Sentry.captureMessage(message, Sentry.Severity.Error);
       super.error(message, trace, context);
+      Sentry.captureMessage(message, Sentry.Severity.Error);
     } catch (err) {  }
   }
 
   warn(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      Sentry.captureMessage(message, Sentry.Severity.Warning);
+      // Sentry.captureMessage(message, Sentry.Severity.Warning);
       super.warn(message, context);
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Warning,
+        data: {
+          context
+        }
+      });
     } catch (err) {  }
   }
 
   debug(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      Sentry.captureMessage(message, Sentry.Severity.Debug);
+      // Sentry.captureMessage(message, Sentry.Severity.Debug);
       super.debug(message, context);
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Debug,
+        data: {
+          context
+        }
+      });
     } catch (err) {  }
   }
 
   verbose(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      Sentry.captureMessage(message, Sentry.Severity.Info);
+      // Sentry.captureMessage(message, Sentry.Severity.Info);
       super.verbose(message, context);
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Info,
+        data: {
+          context
+        }
+      });
     } catch (err) {  }
   }
 

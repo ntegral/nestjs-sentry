@@ -10,15 +10,16 @@ import {
     RpcArgumentsHost
   } from '@nestjs/common/interfaces';
 //import {  GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
-import type { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
+// import type { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
+import type { GqlContextType } from '@nestjs/graphql';
 
 // Sentry imports
 import { Scope } from '@sentry/hub';
 import { Handlers } from '@sentry/node';
 
-let GqlExecutionContxt: any;
+let GqlExecutionContext: any;
 try {
-  ({ GqlExecutionContxt } = require('@nestjs/graphql'));
+  ({ GqlExecutionContext } = require('@nestjs/graphql'));
 } catch (e) {}
 
 
@@ -57,7 +58,7 @@ export class GraphqlInterceptor implements NestInterceptor {
                             return this.captureGraphqlException(
                                 scope,
                                 //GqlExecutionContext.create(context),
-                                GqlExecutionContxt.create(context),
+                                GqlExecutionContext.create(context),
                                 exception
                             );
                     }
@@ -98,7 +99,7 @@ export class GraphqlInterceptor implements NestInterceptor {
         this.client.instance().captureException(exception);
     }
 
-    private captureGraphqlException(scope: Scope, gqlContext: GqlExecutionContext, exception: any): void {
+    private captureGraphqlException(scope: Scope, gqlContext: typeof GqlExecutionContext, exception: any): void {
         const info = gqlContext.getInfo()
         const context = gqlContext.getContext()
 
