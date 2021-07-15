@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1613185044753" clover="3.2.0">
-  <project timestamp="1613185044753" name="All files">
-    <metrics statements="69" coveredstatements="66" conditionals="17" coveredconditionals="14" methods="20" coveredmethods="17" elements="106" coveredelements="97" complexity="0" loc="69" ncloc="69" packages="1" files="6" classes="6"/>
+<coverage generated="1626367306240" clover="3.2.0">
+  <project timestamp="1626367306240" name="All files">
+    <metrics statements="73" coveredstatements="67" conditionals="19" coveredconditionals="14" methods="21" coveredmethods="17" elements="113" coveredelements="98" complexity="0" loc="73" ncloc="73" packages="1" files="6" classes="6"/>
     <file name="sentry-core.module.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry-core.module.ts">
       <metrics statements="20" coveredstatements="20" conditionals="10" coveredconditionals="9" methods="7" coveredmethods="7"/>
       <line num="1" count="3" type="stmt"/>
@@ -53,28 +53,28 @@
       <line num="7" count="2" type="stmt"/>
     </file>
     <file name="sentry.service.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry.service.ts">
-      <metrics statements="34" coveredstatements="31" conditionals="7" coveredconditionals="5" methods="9" coveredmethods="6"/>
+      <metrics statements="38" coveredstatements="32" conditionals="9" coveredconditionals="5" methods="10" coveredmethods="6"/>
       <line num="1" count="3" type="stmt"/>
       <line num="3" count="3" type="stmt"/>
       <line num="5" count="3" type="stmt"/>
       <line num="9" count="3" type="stmt"/>
       <line num="10" count="20" type="stmt"/>
-      <line num="13" count="20" type="stmt"/>
-      <line num="16" count="20" type="stmt"/>
-      <line num="17" count="20" type="cond" truecount="4" falsecount="0"/>
+      <line num="14" count="20" type="stmt"/>
+      <line num="17" count="20" type="stmt"/>
+      <line num="18" count="20" type="cond" truecount="4" falsecount="0"/>
       <line num="19" count="2" type="stmt"/>
-      <line num="21" count="18" type="cond" truecount="1" falsecount="0"/>
-      <line num="22" count="18" type="stmt"/>
-      <line num="26" count="0" type="stmt"/>
-      <line num="29" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="39" count="2" type="stmt"/>
-      <line num="40" count="2" type="stmt"/>
-      <line num="41" count="2" type="stmt"/>
-      <line num="42" count="2" type="stmt"/>
-      <line num="47" count="1" type="stmt"/>
-      <line num="48" count="1" type="stmt"/>
-      <line num="49" count="1" type="stmt"/>
-      <line num="50" count="1" type="stmt"/>
+      <line num="20" count="2" type="stmt"/>
+      <line num="22" count="18" type="cond" truecount="1" falsecount="0"/>
+      <line num="23" count="18" type="stmt"/>
+      <line num="27" count="0" type="stmt"/>
+      <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="41" count="0" type="stmt"/>
+      <line num="43" count="0" type="stmt"/>
+      <line num="47" count="2" type="stmt"/>
+      <line num="48" count="2" type="stmt"/>
+      <line num="49" count="2" type="stmt"/>
+      <line num="50" count="2" type="stmt"/>
       <line num="55" count="1" type="stmt"/>
       <line num="56" count="1" type="stmt"/>
       <line num="57" count="1" type="stmt"/>
@@ -87,7 +87,11 @@
       <line num="72" count="1" type="stmt"/>
       <line num="73" count="1" type="stmt"/>
       <line num="74" count="1" type="stmt"/>
-      <line num="79" count="0" type="stmt"/>
+      <line num="79" count="1" type="stmt"/>
+      <line num="80" count="1" type="stmt"/>
+      <line num="81" count="1" type="stmt"/>
+      <line num="82" count="1" type="stmt"/>
+      <line num="87" count="0" type="stmt"/>
     </file>
   </project>
 </coverage>

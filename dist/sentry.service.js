@@ -42,6 +42,7 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
         this.options = options;
         this.app = '@ntegral/nestjs-sentry: ';
         if (!(options && options.dsn)) {
+            console.log('options not found. Did you use SentryModule.forRoot?');
             return;
         }
         const { debug, integrations = [] } = options, sentryOptions = __rest(options, ["debug", "integrations"]);
@@ -70,14 +71,8 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
     log(message, context) {
         message = `${this.app} ${message}`;
         try {
+            Sentry.captureMessage(message, Sentry.Severity.Log);
             super.log(message, context);
-            Sentry.addBreadcrumb({
-                message,
-                level: Sentry.Severity.Log,
-                data: {
-                    context
-                }
-            });
         }
         catch (err) { }
     }
@@ -93,13 +88,7 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
         message = `${this.app} ${message}`;
         try {
             super.warn(message, context);
-            Sentry.addBreadcrumb({
-                message,
-                level: Sentry.Severity.Warning,
-                data: {
-                    context
-                }
-            });
+            Sentry.captureMessage(message, Sentry.Severity.Warning);
         }
         catch (err) { }
     }
@@ -107,13 +96,7 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
         message = `${this.app} ${message}`;
         try {
             super.debug(message, context);
-            Sentry.addBreadcrumb({
-                message,
-                level: Sentry.Severity.Debug,
-                data: {
-                    context
-                }
-            });
+            Sentry.captureMessage(message, Sentry.Severity.Debug);
         }
         catch (err) { }
     }
@@ -121,13 +104,7 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
         message = `${this.app} ${message}`;
         try {
             super.verbose(message, context);
-            Sentry.addBreadcrumb({
-                message,
-                level: Sentry.Severity.Info,
-                data: {
-                    context
-                }
-            });
+            Sentry.captureMessage(message, Sentry.Severity.Info);
         }
         catch (err) { }
     }
