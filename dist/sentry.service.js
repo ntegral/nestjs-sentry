@@ -36,19 +36,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const Sentry = require("@sentry/node");
 const sentry_constants_1 = require("./sentry.constants");
-let SentryService = SentryService_1 = class SentryService extends common_1.Logger {
-    constructor(options, prior) {
+let SentryService = SentryService_1 = class SentryService extends common_1.ConsoleLogger {
+    constructor(opts) {
         super();
-        this.options = options;
+        this.opts = opts;
         this.app = '@ntegral/nestjs-sentry: ';
-        if (!(options && options.dsn)) {
-            console.log('options not found. Did you use SentryModule.forRoot?');
+        if (!(opts && opts.dsn)) {
             return;
         }
-        const { debug, integrations = [] } = options, sentryOptions = __rest(options, ["debug", "integrations"]);
+        const { debug, integrations = [] } = opts, sentryOptions = __rest(opts, ["debug", "integrations"]);
         Sentry.init(Object.assign(Object.assign({}, sentryOptions), { integrations: [
                 new Sentry.Integrations.OnUncaughtException({
-                    onFatalError: ((err) => __awaiter(this, void 0, void 0, function* () {
+                    onFatalError: (err) => __awaiter(this, void 0, void 0, function* () {
                         if (err.name === 'SentryError') {
                             console.log(err);
                         }
@@ -56,10 +55,10 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
                             Sentry.getCurrentHub().getClient().captureException(err);
                             process.exit(1);
                         }
-                    })),
+                    }),
                 }),
                 new Sentry.Integrations.OnUnhandledRejection({ mode: 'warn' }),
-                ...integrations
+                ...integrations,
             ] }));
     }
     static SentryServiceInstance() {
@@ -115,8 +114,7 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Logge
 SentryService = SentryService_1 = __decorate([
     common_1.Injectable(),
     __param(0, common_1.Inject(sentry_constants_1.SENTRY_MODULE_OPTIONS)),
-    __param(1, common_1.Optional()),
-    __metadata("design:paramtypes", [Object, SentryService])
+    __metadata("design:paramtypes", [Object])
 ], SentryService);
 exports.SentryService = SentryService;
 //# sourceMappingURL=sentry.service.js.map

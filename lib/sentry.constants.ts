@@ -1,2 +1,2 @@
-export const SENTRY_MODULE_OPTIONS = 'SentryModuleOptions';
-export const SENTRY_TOKEN = 'SentryToken';
+export const SENTRY_MODULE_OPTIONS = Symbol('SentryModuleOptions');
+export const SENTRY_TOKEN = Symbol('SentryToken');

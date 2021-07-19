@@ -1,7 +1,6 @@
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/";
 import { tap } from "rxjs/operators";
-// import { InjectSentry } from "./sentry.decorator";
 import { SentryService } from "./sentry.service";
 
 import { 
@@ -9,8 +8,6 @@ import {
     WsArgumentsHost,
     RpcArgumentsHost
   } from '@nestjs/common/interfaces';
-//import {  GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
-// import type { GqlContextType, GqlExecutionContext } from '@nestjs/graphql';
 import type { GqlContextType } from '@nestjs/graphql';
 
 // Sentry imports
@@ -26,9 +23,7 @@ try {
 @Injectable()
 export class GraphqlInterceptor implements NestInterceptor {
     private client: SentryService = SentryService.SentryServiceInstance();
-    constructor(
-        // @InjectSentry() private readonly client: SentryService
-    ) { }
+    constructor() { }
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
         // first param would be for events, second is for errors

@@ -1,1 +1,2 @@
-export declare function InjectSentry(): (target: object, key: string | symbol, index?: number | undefined) => void;
+export declare const InjectSentry: () => ParameterDecorator;
+export declare const InjectSentryModuleConfig: () => ParameterDecorator;

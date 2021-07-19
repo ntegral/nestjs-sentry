@@ -4,6 +4,7 @@
     "compilerOptions": {
         "sourceMap": true,
         "inlineSources": true,
-        "sourceRoot": "/"
+        "sourceRoot": "/",
+        "noImplicitAny": false
     }
 }

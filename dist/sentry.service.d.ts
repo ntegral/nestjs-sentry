@@ -1,11 +1,11 @@
-import { Logger } from '@nestjs/common';
+import { ConsoleLogger } from '@nestjs/common';
 import * as Sentry from '@sentry/node';
 import { SentryModuleOptions } from './sentry.interfaces';
-export declare class SentryService extends Logger {
-    private readonly options?;
+export declare class SentryService extends ConsoleLogger {
+    readonly opts?: SentryModuleOptions | undefined;
     app: string;
     private static serviceInstance;
-    constructor(options?: SentryModuleOptions | undefined, prior?: SentryService);
+    constructor(opts?: SentryModuleOptions | undefined);
     static SentryServiceInstance(): SentryService;
     log(message: string, context?: string): void;
     error(message: string, trace?: string, context?: string): void;
