@@ -137,6 +137,39 @@ import { GraphqlInterceptor } from '@ntegral/nestjs-sentry';
 export class AppModule {}
 ```
 
+## Flushing sentry
+Sentry does not flush all the errors by itself, it does it in background so that it doesn't block the main thread. If 
+you kill the nestjs app forcefully some exceptions don't have to be flushed and logged successfully.
+
+If you want to force that behaviour use the close flag in your options. That is handy if using nestjs as a console
+runner. Keep in mind that you need to have ```app.enableShutdownHooks();``` enabled in order 
+for closing (flushing) to work.
+
+```typescript
+import { Module } from '@nestjs-common';
+import { SentryModule } from '@ntegral/nestjs-sentry';
+import { LogLevel } from '@sentry/types';
+
+@Module({
+  imports: [
+    SentryModule.forRoot({
+      dsn: 'sentry_io_dsn',
+      debug: true | false,
+      environment: 'dev' | 'production' | 'some_environment',
+      release: 'some_release', | null, // must create a release in sentry.io dashboard
+      logLevel: LogLevel.Debug //based on sentry.io loglevel //
+      close: {
+        enabled: true,
+        // Time in milliseconds to forcefully quit the application  
+        timeout?: number,  
+      }
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+
 ## Contributing
 
 I would greatly appreciate any contributions to make this project better. Please

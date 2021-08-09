@@ -3,8 +3,15 @@ import { Integration, Options } from '@sentry/types';
 import { Severity } from "@sentry/node";
 import { ConsoleLoggerOptions } from "@nestjs/common";
 
+export interface SentryCloseOptions {
+    enabled: boolean;
+    // timeout – Maximum time in ms the client should wait until closing forcefully
+    timeout?: number;
+}
+
 export type SentryModuleOptions = Omit<Options, 'integrations'> & {
     integrations?: Integration[];
+    close?: SentryCloseOptions
 } & ConsoleLoggerOptions;
 
 export interface SentryOptionsFactory {
