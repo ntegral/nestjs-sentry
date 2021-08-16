@@ -1,18 +1,11 @@
-import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from "@nestjs/common";
-import { Observable } from "rxjs/";
-import { tap } from "rxjs/operators";
-import { SentryService } from "./sentry.service";
+import { ExecutionContext, Injectable } from "@nestjs/common";
 
-import { 
-    HttpArgumentsHost,
-    WsArgumentsHost,
-    RpcArgumentsHost
-  } from '@nestjs/common/interfaces';
 import type { GqlContextType } from '@nestjs/graphql';
 
 // Sentry imports
 import { Scope } from '@sentry/hub';
 import { Handlers } from '@sentry/node';
+import { SentryInterceptor } from "./sentry.interceptor";
 
 let GqlExecutionContext: any;
 try {
@@ -21,77 +14,14 @@ try {
 
 
 @Injectable()
-export class GraphqlInterceptor implements NestInterceptor {
-    private client: SentryService = SentryService.SentryServiceInstance();
-    constructor() { }
+export class GraphqlInterceptor extends SentryInterceptor {
 
-    intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-        // first param would be for events, second is for errors
-        return next.handle().pipe(
-            tap(null, (exception) => {
-                this.client.instance().withScope((scope) => {
-                    switch (context.getType<GqlContextType>()) {
-                        case 'http':
-                            return this.captureHttpException(
-                                scope,
-                                context.switchToHttp(),
-                                exception
-                            );
-                        case 'rpc':
-                            return this.captureRpcException(
-                                scope,
-                                context.switchToRpc(),
-                                exception,
-                            );
-                        case 'ws':
-                            return this.captureWsException(
-                                scope,
-                                context.switchToWs(),
-                                exception,
-                            );
-                        case 'graphql':
-                            return this.captureGraphqlException(
-                                scope,
-                                //GqlExecutionContext.create(context),
-                                GqlExecutionContext.create(context),
-                                exception
-                            );
-                    }
-                })
-            })
-        );
-    }
-
-    private captureHttpException(scope: Scope, http: HttpArgumentsHost, exception: any): void {
-        const data = Handlers.parseRequest(<any>{}, http.getRequest(), {});
-
-        scope.setExtra('req', data.request);
-
-        if (data.extra) scope.setExtras(data.extra);
-        if (data.user) scope.setUser(data.user);
-
-        this.client.instance().captureException(exception);
-    }
-
-    private captureRpcException(
-        scope: Scope,
-        rpc: RpcArgumentsHost,
-        exception: any,
-    ): void {
-        scope.setExtra('rpc_data', rpc.getData());
-
-        this.client.instance().captureException(exception);
-    }
-
-    private captureWsException(
-        scope: Scope,
-        ws: WsArgumentsHost,
-        exception: any,
-    ): void {
-        scope.setExtra('ws_client', ws.getClient());
-        scope.setExtra('ws_data', ws.getData());
-
-        this.client.instance().captureException(exception);
+    protected captureException(context: ExecutionContext, scope: Scope, exception: any) {
+        if (context.getType<GqlContextType>() === 'graphql') {
+            this.captureGraphqlException(scope, GqlExecutionContext.create(context), exception);
+        } else {
+            super.captureException(context, scope, exception);
+        }
     }
 
     private captureGraphqlException(scope: Scope, gqlContext: typeof GqlExecutionContext, exception: any): void {

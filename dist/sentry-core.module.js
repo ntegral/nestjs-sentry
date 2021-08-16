@@ -16,6 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var SentryCoreModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SentryCoreModule = void 0;
 const common_1 = require("@nestjs/common");
 const sentry_constants_1 = require("./sentry.constants");
 const sentry_service_1 = require("./sentry.service");

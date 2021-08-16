@@ -1,11 +1,7 @@
-import { CallHandler, ExecutionContext, NestInterceptor } from "@nestjs/common";
-import { Observable } from "rxjs/";
-export declare class GraphqlInterceptor implements NestInterceptor {
-    private client;
-    constructor();
-    intercept(context: ExecutionContext, next: CallHandler): Observable<any>;
-    private captureHttpException;
-    private captureRpcException;
-    private captureWsException;
+import { ExecutionContext } from "@nestjs/common";
+import { Scope } from '@sentry/hub';
+import { SentryInterceptor } from "./sentry.interceptor";
+export declare class GraphqlInterceptor extends SentryInterceptor {
+    protected captureException(context: ExecutionContext, scope: Scope, exception: any): void;
     private captureGraphqlException;
 }

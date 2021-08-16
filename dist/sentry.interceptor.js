@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SentryInterceptor = void 0;
 const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
 const node_1 = require("@sentry/node");
@@ -22,17 +23,20 @@ let SentryInterceptor = class SentryInterceptor {
         return next.handle().pipe(operators_1.tap(null, (exception) => {
             if (this.shouldReport(exception)) {
                 this.client.instance().withScope((scope) => {
-                    switch (context.getType()) {
-                        case 'http':
-                            return this.captureHttpException(scope, context.switchToHttp(), exception);
-                        case 'rpc':
-                            return this.captureRpcException(scope, context.switchToRpc(), exception);
-                        case 'ws':
-                            return this.captureWsException(scope, context.switchToWs(), exception);
-                    }
+                    this.captureException(context, scope, exception);
                 });
             }
         }));
+    }
+    captureException(context, scope, exception) {
+        switch (context.getType()) {
+            case 'http':
+                return this.captureHttpException(scope, context.switchToHttp(), exception);
+            case 'rpc':
+                return this.captureRpcException(scope, context.switchToRpc(), exception);
+            case 'ws':
+                return this.captureWsException(scope, context.switchToWs(), exception);
+        }
     }
     captureHttpException(scope, http, exception) {
         const data = node_1.Handlers.parseRequest({}, http.getRequest(), {});
