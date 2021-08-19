@@ -1,97 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1626367306240" clover="3.2.0">
-  <project timestamp="1626367306240" name="All files">
-    <metrics statements="73" coveredstatements="67" conditionals="19" coveredconditionals="14" methods="21" coveredmethods="17" elements="113" coveredelements="98" complexity="0" loc="73" ncloc="73" packages="1" files="6" classes="6"/>
-    <file name="sentry-core.module.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry-core.module.ts">
-      <metrics statements="20" coveredstatements="20" conditionals="10" coveredconditionals="9" methods="7" coveredmethods="7"/>
-      <line num="1" count="3" type="stmt"/>
-      <line num="13" count="3" type="stmt"/>
-      <line num="17" count="3" type="stmt"/>
-      <line num="18" count="3" type="stmt"/>
-      <line num="22" count="3" type="stmt"/>
-      <line num="25" count="2" type="stmt"/>
-      <line num="27" count="2" type="stmt"/>
-      <line num="37" count="8" type="stmt"/>
-      <line num="40" count="8" type="stmt"/>
-      <line num="43" count="8" type="stmt"/>
-      <line num="58" count="8" type="cond" truecount="4" falsecount="0"/>
-      <line num="59" count="1" type="stmt"/>
-      <line num="61" count="7" type="stmt"/>
-      <line num="62" count="7" type="stmt"/>
-      <line num="74" count="8" type="cond" truecount="2" falsecount="0"/>
-      <line num="75" count="1" type="stmt"/>
-      <line num="81" count="7" type="stmt"/>
-      <line num="84" count="7" type="stmt"/>
-      <line num="86" count="7" type="stmt"/>
-      <line num="87" count="7" type="stmt"/>
-    </file>
-    <file name="sentry.constants.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry.constants.ts">
-      <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-      <line num="1" count="3" type="stmt"/>
-      <line num="2" count="3" type="stmt"/>
-    </file>
-    <file name="sentry.decorator.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry.decorator.ts">
-      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-      <line num="1" count="1" type="stmt"/>
+<coverage generated="1629398845685" clover="3.2.0">
+  <project timestamp="1629398845685" name="All files">
+    <metrics statements="134" coveredstatements="118" conditionals="146" coveredconditionals="90" methods="45" coveredmethods="38" elements="325" coveredelements="246" complexity="0" loc="134" ncloc="134" packages="1" files="7" classes="7"/>
+    <file name="injectDecoratoryFactory.ts" path="/Users/dhardy/Projects/npm/2021/3.x.x/nestjs-sentry/lib/injectDecoratoryFactory.ts">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <line num="2" count="1" type="stmt"/>
-      <line num="4" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="12" count="2" type="stmt"/>
     </file>
-    <file name="sentry.module.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry.module.ts">
-      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-      <line num="1" count="3" type="stmt"/>
+    <file name="sentry-core.module.ts" path="/Users/dhardy/Projects/npm/2021/3.x.x/nestjs-sentry/lib/sentry-core.module.ts">
+      <metrics statements="34" coveredstatements="32" conditionals="43" coveredconditionals="27" methods="15" coveredmethods="14"/>
+      <line num="2" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="3" count="3" type="cond" truecount="1" falsecount="3"/>
+      <line num="4" count="3" type="cond" truecount="3" falsecount="1"/>
+      <line num="5" count="0" type="cond" truecount="0" falsecount="8"/>
+      <line num="6" count="3" type="cond" truecount="1" falsecount="2"/>
+      <line num="8" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="9" count="7" type="cond" truecount="1" falsecount="1"/>
+      <line num="10" count="7" type="cond" truecount="2" falsecount="0"/>
+      <line num="11" count="7" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="13" count="14" type="cond" truecount="2" falsecount="0"/>
+      <line num="14" count="7" type="cond" truecount="2" falsecount="0"/>
+      <line num="18" count="3" type="stmt"/>
+      <line num="19" count="3" type="stmt"/>
+      <line num="20" count="3" type="stmt"/>
+      <line num="21" count="3" type="stmt"/>
+      <line num="22" count="3" type="stmt"/>
+      <line num="23" count="3" type="stmt"/>
+      <line num="25" count="4" type="stmt"/>
+      <line num="26" count="4" type="stmt"/>
+      <line num="33" count="8" type="stmt"/>
+      <line num="36" count="8" type="stmt"/>
+      <line num="38" count="8" type="stmt"/>
+      <line num="50" count="8" type="cond" truecount="4" falsecount="0"/>
+      <line num="51" count="1" type="stmt"/>
+      <line num="53" count="7" type="stmt"/>
+      <line num="54" count="7" type="stmt"/>
+      <line num="63" count="8" type="cond" truecount="2" falsecount="0"/>
+      <line num="64" count="1" type="stmt"/>
+      <line num="70" count="7" type="stmt"/>
+      <line num="73" count="7" type="stmt"/>
+      <line num="75" count="7" type="stmt"/>
+      <line num="80" count="3" type="stmt"/>
+      <line num="84" count="3" type="stmt"/>
+    </file>
+    <file name="sentry.constants.ts" path="/Users/dhardy/Projects/npm/2021/3.x.x/nestjs-sentry/lib/sentry.constants.ts">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="2" count="3" type="stmt"/>
-      <line num="6" count="3" type="stmt"/>
-      <line num="8" count="2" type="stmt"/>
-      <line num="15" count="8" type="stmt"/>
-    </file>
-    <file name="sentry.providers.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry.providers.ts">
-      <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="3" count="3" type="stmt"/>
       <line num="4" count="3" type="stmt"/>
-      <line num="6" count="3" type="stmt"/>
-      <line num="7" count="2" type="stmt"/>
     </file>
-    <file name="sentry.service.ts" path="/Users/dhardy/Projects/npm/2021/nestjs-sentry/lib/sentry.service.ts">
-      <metrics statements="38" coveredstatements="32" conditionals="9" coveredconditionals="5" methods="10" coveredmethods="6"/>
-      <line num="1" count="3" type="stmt"/>
-      <line num="3" count="3" type="stmt"/>
-      <line num="5" count="3" type="stmt"/>
+    <file name="sentry.decorator.ts" path="/Users/dhardy/Projects/npm/2021/3.x.x/nestjs-sentry/lib/sentry.decorator.ts">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="9" count="1" type="stmt"/>
+    </file>
+    <file name="sentry.module.ts" path="/Users/dhardy/Projects/npm/2021/3.x.x/nestjs-sentry/lib/sentry.module.ts">
+      <metrics statements="13" coveredstatements="12" conditionals="22" coveredconditionals="8" methods="3" coveredmethods="3"/>
+      <line num="2" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="3" count="3" type="cond" truecount="1" falsecount="3"/>
+      <line num="4" count="3" type="cond" truecount="3" falsecount="1"/>
+      <line num="5" count="0" type="cond" truecount="0" falsecount="8"/>
+      <line num="6" count="3" type="cond" truecount="1" falsecount="2"/>
       <line num="9" count="3" type="stmt"/>
-      <line num="10" count="20" type="stmt"/>
-      <line num="14" count="20" type="stmt"/>
-      <line num="17" count="20" type="stmt"/>
-      <line num="18" count="20" type="cond" truecount="4" falsecount="0"/>
-      <line num="19" count="2" type="stmt"/>
-      <line num="20" count="2" type="stmt"/>
-      <line num="22" count="18" type="cond" truecount="1" falsecount="0"/>
-      <line num="23" count="18" type="stmt"/>
-      <line num="27" count="0" type="stmt"/>
-      <line num="30" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="40" count="0" type="cond" truecount="0" falsecount="2"/>
-      <line num="41" count="0" type="stmt"/>
-      <line num="43" count="0" type="stmt"/>
-      <line num="47" count="2" type="stmt"/>
-      <line num="48" count="2" type="stmt"/>
-      <line num="49" count="2" type="stmt"/>
-      <line num="50" count="2" type="stmt"/>
-      <line num="55" count="1" type="stmt"/>
-      <line num="56" count="1" type="stmt"/>
-      <line num="57" count="1" type="stmt"/>
-      <line num="58" count="1" type="stmt"/>
-      <line num="63" count="1" type="stmt"/>
-      <line num="64" count="1" type="stmt"/>
-      <line num="65" count="1" type="stmt"/>
-      <line num="66" count="1" type="stmt"/>
-      <line num="71" count="1" type="stmt"/>
-      <line num="72" count="1" type="stmt"/>
-      <line num="73" count="1" type="stmt"/>
-      <line num="74" count="1" type="stmt"/>
-      <line num="79" count="1" type="stmt"/>
-      <line num="80" count="1" type="stmt"/>
-      <line num="81" count="1" type="stmt"/>
+      <line num="10" count="3" type="stmt"/>
+      <line num="11" count="3" type="stmt"/>
+      <line num="12" count="3" type="stmt"/>
+      <line num="14" count="4" type="stmt"/>
+      <line num="20" count="8" type="stmt"/>
+      <line num="26" count="3" type="stmt"/>
+      <line num="29" count="3" type="stmt"/>
+    </file>
+    <file name="sentry.providers.ts" path="/Users/dhardy/Projects/npm/2021/3.x.x/nestjs-sentry/lib/sentry.providers.ts">
+      <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+      <line num="2" count="3" type="stmt"/>
+      <line num="3" count="3" type="stmt"/>
+      <line num="4" count="3" type="stmt"/>
+      <line num="6" count="4" type="stmt"/>
+      <line num="11" count="3" type="stmt"/>
+    </file>
+    <file name="sentry.service.ts" path="/Users/dhardy/Projects/npm/2021/3.x.x/nestjs-sentry/lib/sentry.service.ts">
+      <metrics statements="71" coveredstatements="58" conditionals="81" coveredconditionals="55" methods="24" coveredmethods="18"/>
+      <line num="2" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="3" count="3" type="cond" truecount="1" falsecount="3"/>
+      <line num="4" count="3" type="cond" truecount="3" falsecount="1"/>
+      <line num="5" count="0" type="cond" truecount="0" falsecount="8"/>
+      <line num="6" count="3" type="cond" truecount="1" falsecount="2"/>
+      <line num="8" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="9" count="3" type="cond" truecount="3" falsecount="1"/>
+      <line num="11" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="12" count="3" type="stmt"/>
+      <line num="14" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="15" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="16" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="18" count="0" type="stmt"/>
+      <line num="19" count="5" type="cond" truecount="2" falsecount="0"/>
+      <line num="20" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="23" count="3" type="cond" truecount="3" falsecount="0"/>
+      <line num="24" count="20" type="stmt"/>
+      <line num="25" count="81" type="cond" truecount="4" falsecount="0"/>
+      <line num="26" count="61" type="stmt"/>
+      <line num="27" count="20" type="cond" truecount="3" falsecount="1"/>
+      <line num="28" count="20" type="stmt"/>
+      <line num="29" count="0" type="cond" truecount="0" falsecount="4"/>
+      <line num="30" count="0" type="stmt"/>
+      <line num="32" count="20" type="stmt"/>
+      <line num="35" count="3" type="stmt"/>
+      <line num="36" count="3" type="stmt"/>
+      <line num="37" count="3" type="stmt"/>
+      <line num="38" count="3" type="stmt"/>
+      <line num="39" count="3" type="stmt"/>
+      <line num="41" count="24" type="stmt"/>
+      <line num="42" count="24" type="stmt"/>
+      <line num="43" count="24" type="stmt"/>
+      <line num="44" count="24" type="cond" truecount="4" falsecount="0"/>
+      <line num="46" count="4" type="stmt"/>
+      <line num="48" count="20" type="cond" truecount="1" falsecount="0"/>
+      <line num="49" count="20" type="stmt"/>
+      <line num="51" count="0" type="stmt"/>
+      <line num="54" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="55" count="0" type="stmt"/>
+      <line num="58" count="0" type="stmt"/>
+      <line num="59" count="0" type="stmt"/>
+      <line num="68" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="69" count="0" type="stmt"/>
+      <line num="71" count="0" type="stmt"/>
+      <line num="74" count="2" type="stmt"/>
+      <line num="75" count="2" type="stmt"/>
+      <line num="76" count="2" type="stmt"/>
+      <line num="77" count="2" type="stmt"/>
       <line num="82" count="1" type="stmt"/>
-      <line num="87" count="0" type="stmt"/>
+      <line num="83" count="1" type="stmt"/>
+      <line num="84" count="1" type="stmt"/>
+      <line num="85" count="1" type="stmt"/>
+      <line num="90" count="1" type="stmt"/>
+      <line num="91" count="1" type="stmt"/>
+      <line num="92" count="1" type="stmt"/>
+      <line num="93" count="1" type="stmt"/>
+      <line num="98" count="1" type="stmt"/>
+      <line num="99" count="1" type="stmt"/>
+      <line num="100" count="1" type="stmt"/>
+      <line num="101" count="1" type="stmt"/>
+      <line num="106" count="1" type="stmt"/>
+      <line num="107" count="1" type="stmt"/>
+      <line num="108" count="1" type="stmt"/>
+      <line num="109" count="1" type="stmt"/>
+      <line num="114" count="0" type="stmt"/>
+      <line num="118" count="4" type="stmt"/>
+      <line num="119" count="4" type="cond" truecount="10" falsecount="0"/>
+      <line num="120" count="1" type="cond" truecount="3" falsecount="1"/>
+      <line num="125" count="3" type="stmt"/>
+      <line num="130" count="3" type="stmt"/>
     </file>
   </project>
 </coverage>

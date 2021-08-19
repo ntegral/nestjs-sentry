@@ -110,6 +110,14 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
     instance() {
         return Sentry;
     }
+    onApplicationShutdown(signal) {
+        var _a, _b, _c;
+        return __awaiter(this, void 0, void 0, function* () {
+            if (((_b = (_a = this.opts) === null || _a === void 0 ? void 0 : _a.close) === null || _b === void 0 ? void 0 : _b.enabled) === true) {
+                yield Sentry.close((_c = this.opts) === null || _c === void 0 ? void 0 : _c.close.timeout);
+            }
+        });
+    }
 };
 SentryService = SentryService_1 = __decorate([
     common_1.Injectable(),
