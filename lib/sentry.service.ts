@@ -1,12 +1,13 @@
 import { Inject, Injectable, ConsoleLogger } from '@nestjs/common';
 import { Options, Client } from '@sentry/types';
 import * as Sentry from '@sentry/node';
+import { OnApplicationShutdown } from '@nestjs/common';
 
 import { SENTRY_MODULE_OPTIONS } from './sentry.constants';
 import { SentryModuleOptions } from './sentry.interfaces';
 
 @Injectable()
-export class SentryService extends ConsoleLogger {
+export class SentryService extends ConsoleLogger implements OnApplicationShutdown {
   app = '@ntegral/nestjs-sentry: ';
   private static serviceInstance: SentryService;
   constructor(
@@ -93,5 +94,11 @@ export class SentryService extends ConsoleLogger {
 
   instance() {
     return Sentry;
+  }
+
+  async onApplicationShutdown(signal?: string) {
+    if (this.opts?.close?.enabled === true) {
+      await Sentry.close(this.opts?.close.timeout);
+    }
   }
 }

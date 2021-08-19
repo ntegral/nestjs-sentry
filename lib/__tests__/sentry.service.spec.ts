@@ -5,6 +5,11 @@ import { SentryModule } from "../sentry.module";
 import { SentryService } from "../sentry.service";
 import { SENTRY_TOKEN } from "../sentry.constants";
 
+import * as Sentry from '@sentry/node';
+jest.spyOn(Sentry, 'close')
+  .mockImplementation(() => Promise.resolve(true));
+const mockCloseSentry = Sentry.close as jest.MockedFunction<typeof Sentry.close>;
+
 describe('SentryService', () => {
     let config: SentryModuleOptions = {
         dsn: 'https://45740e3ae4864e77a01ad61a47ea3b7e@o115888.ingest.sentry.io/25956308132020',
@@ -158,6 +163,41 @@ describe('SentryService', () => {
             // console.log('sentry', sentry);
             sentry.warn('sentry:warn','context:warn');
             expect(sentry.warn).toBeInstanceOf(Function);
+        });
+    });
+
+    describe('sentry.close', () => {
+        it('should not close the sentry if not specified in config', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [SentryModule.forRoot(config)],
+            }).compile();
+            await mod.enableShutdownHooks();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+            await mod.close();
+            expect(mockCloseSentry).not.toHaveBeenCalled();
+        });
+
+        it('should close the sentry if specified in config', async() => {
+            const timeout = 100;
+            const mod = await Test.createTestingModule({
+                imports: [SentryModule.forRoot({
+                    ...config,
+                    close: {
+                        enabled: true,
+                        timeout
+                    }
+                })],
+            }).compile();
+            await mod.enableShutdownHooks();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+            await mod.close();
+            expect(mockCloseSentry).toHaveBeenCalledWith(timeout);
         });
     });
     
