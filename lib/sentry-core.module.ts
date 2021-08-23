@@ -16,6 +16,7 @@ import {
 } from './sentry.constants';
 import { SentryService } from './sentry.service';
 import { createSentryProviders } from './sentry.providers';
+import { createSentryService } from './createSentryService';
 
 @Global()
 @Module({})
@@ -25,9 +26,9 @@ export class SentryCoreModule {
         const provider = createSentryProviders(options);
 
         return {
-            exports: [provider, SentryService],
+            exports: [provider],
             module: SentryCoreModule,
-            providers: [provider, SentryService],
+            providers: [provider],
         };
     }
 
@@ -37,7 +38,7 @@ export class SentryCoreModule {
         const provider: Provider = {
             inject: [SENTRY_MODULE_OPTIONS],
             provide: SENTRY_TOKEN,
-            useFactory: (options: SentryModuleOptions) => new SentryService(options),
+            useFactory: (options: SentryModuleOptions) => createSentryService(options),
         };
 
         return {

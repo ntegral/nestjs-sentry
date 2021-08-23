@@ -1,4 +1,4 @@
-import { Inject, Injectable, ConsoleLogger } from '@nestjs/common';
+import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import { Options, Client } from '@sentry/types';
 import * as Sentry from '@sentry/node';
 import { OnApplicationShutdown } from '@nestjs/common';
@@ -7,14 +7,13 @@ import { SENTRY_MODULE_OPTIONS } from './sentry.constants';
 import { SentryModuleOptions } from './sentry.interfaces';
 
 @Injectable()
-export class SentryService extends ConsoleLogger implements OnApplicationShutdown {
+export class SentryService implements LoggerService, OnApplicationShutdown {
   app = '@ntegral/nestjs-sentry: ';
   private static serviceInstance: SentryService;
   constructor(
     @Inject(SENTRY_MODULE_OPTIONS)
     readonly opts?: SentryModuleOptions,
   ) {
-    super();
     if (!(opts && opts.dsn)) {
       // console.log('options not found. Did you use SentryModule.forRoot?');
       return;
@@ -55,15 +54,19 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   log(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
+      if (this.opts && this.opts.logger) {
+        this.opts.logger.log(message, context);
+      }
       Sentry.captureMessage(message, Sentry.Severity.Log);
-      super.log(message, context);
     } catch (err) {}
   }
 
   error(message: string, trace?: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      super.error(message, trace, context);
+      if (this.opts && this.opts.logger) {
+        this.opts.logger.error(message, trace, context);
+      }
       Sentry.captureMessage(message, Sentry.Severity.Error);
     } catch (err) {}
   }
@@ -71,7 +74,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   warn(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      super.warn(message, context);
+      if (this.opts && this.opts.logger) {
+        this.opts.logger.warn(message, context);
+      }
       Sentry.captureMessage(message, Sentry.Severity.Warning);
     } catch (err) {}
   }
@@ -79,7 +84,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   debug(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      super.debug(message, context);
+      if (this.opts && this.opts.logger && this.opts.logger.debug) {
+        this.opts.logger.debug(message, context);
+      }
       Sentry.captureMessage(message, Sentry.Severity.Debug);
     } catch (err) {}
   }
@@ -87,7 +94,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   verbose(message: string, context?: string) {
     message = `${this.app} ${message}`;
     try {
-      super.verbose(message, context);
+      if (this.opts && this.opts.logger && this.opts.logger.verbose) {
+        this.opts.logger.verbose(message, context);
+      }
       Sentry.captureMessage(message, Sentry.Severity.Info);
     } catch (err) {}
   }

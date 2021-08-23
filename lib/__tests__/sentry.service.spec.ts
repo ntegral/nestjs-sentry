@@ -6,16 +6,28 @@ import { SentryService } from "../sentry.service";
 import { SENTRY_TOKEN } from "../sentry.constants";
 
 import * as Sentry from '@sentry/node';
+import { ConsoleLogger } from '@nestjs/common';
 jest.spyOn(Sentry, 'close')
   .mockImplementation(() => Promise.resolve(true));
 const mockCloseSentry = Sentry.close as jest.MockedFunction<typeof Sentry.close>;
 
 describe('SentryService', () => {
+    let logger = new ConsoleLogger('SentryServiceSpec');
+
     let config: SentryModuleOptions = {
         dsn: 'https://45740e3ae4864e77a01ad61a47ea3b7e@o115888.ingest.sentry.io/25956308132020',
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
+        logger
+    };
+
+    let configWithNoLogger: SentryModuleOptions = {
+        dsn: 'https://45740e3ae4864e77a01ad61a47ea3b7e@o115888.ingest.sentry.io/25956308132020',
+        debug: true,
+        environment: 'development',
+        logLevel: LogLevel.Debug,
+        logger: null
     };
 
     let failureConfig: SentryModuleOptions = {
@@ -23,6 +35,15 @@ describe('SentryService', () => {
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
+        logger
+    };
+
+    let failureConfigNoLogger: SentryModuleOptions = {
+        dsn: 'https://sentry_io_dsn@sentry.io/1512xxx',
+        debug: true,
+        environment: 'development',
+        logLevel: LogLevel.Debug,
+        logger: null
     };
 
     class TestService implements SentryOptionsFactory {
@@ -31,9 +52,21 @@ describe('SentryService', () => {
         }
     }
 
+    class TestServiceNoLogging implements SentryOptionsFactory {
+        createSentryModuleOptions(): SentryModuleOptions {
+            return configWithNoLogger;
+        }
+    }
+
     class FailureService implements SentryOptionsFactory {
         createSentryModuleOptions(): SentryModuleOptions {
             return failureConfig;
+        }
+    }
+
+    class FailureServiceNoLogging implements SentryOptionsFactory {
+        createSentryModuleOptions(): SentryModuleOptions {
+            return failureConfigNoLogger;
         }
     }
 
@@ -69,6 +102,23 @@ describe('SentryService', () => {
             fail.log('sentry:log');
             expect(fail.log).toBeInstanceOf(Function);
         });
+
+        it('should provide the sentry client and call log with disabled logging', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRootAsync({
+                        useClass: FailureServiceNoLogging
+                    })
+                ]
+            }).compile();
+
+            const fail = mod.get<SentryService>(SENTRY_TOKEN);
+            /// expect(sentry).toBeDefined();
+            // expect(sentry).toBeInstanceOf(SentryService);
+            console.log('sentry:error', fail);
+            fail.log('sentry:log');
+            expect(fail.log).toBeInstanceOf(Function);
+        });
     });
 
     describe('sentry.log', () => {
@@ -77,6 +127,23 @@ describe('SentryService', () => {
                 imports: [
                     SentryModule.forRootAsync({
                         useClass: TestService
+                    })
+                ]
+            }).compile();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+            console.log('sentry', sentry);
+            sentry.log('sentry:log');
+            expect(sentry.log).toBeInstanceOf(Function);
+        });
+
+        it('should provide the sentry client and call log with disabled logging', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRootAsync({
+                        useClass: TestServiceNoLogging
                     })
                 ]
             }).compile();
@@ -107,6 +174,23 @@ describe('SentryService', () => {
             sentry.error('sentry:error');
             expect(sentry.error).toBeInstanceOf(Function);
         });
+
+        it('should provide the sentry client and call error with disabled logging', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRootAsync({
+                        useClass: TestServiceNoLogging
+                    })
+                ]
+            }).compile();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+            // console.log('sentry', sentry);
+            sentry.error('sentry:error');
+            expect(sentry.error).toBeInstanceOf(Function);
+        });
     });
 
     describe('sentry.verbose', () => {
@@ -115,6 +199,23 @@ describe('SentryService', () => {
                 imports: [
                     SentryModule.forRootAsync({
                         useClass: TestService
+                    })
+                ]
+            }).compile();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+            // console.log('sentry', sentry);
+            sentry.verbose('sentry:verbose','context:verbose');
+            expect(sentry.verbose).toBeInstanceOf(Function);
+        });
+
+        it('should provide the sentry client and call verbose with disabled logging', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRootAsync({
+                        useClass: TestServiceNoLogging
                     })
                 ]
             }).compile();
@@ -145,6 +246,23 @@ describe('SentryService', () => {
             sentry.debug('sentry:debug','context:debug');
             expect(sentry.debug).toBeInstanceOf(Function);
         });
+
+        it('should provide the sentry client and call debug with disabled logging', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRootAsync({
+                        useClass: TestServiceNoLogging
+                    })
+                ]
+            }).compile();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+            // console.log('sentry', sentry);
+            sentry.debug('sentry:debug','context:debug');
+            expect(sentry.debug).toBeInstanceOf(Function);
+        });
     });
 
     describe('sentry.warn', () => {
@@ -153,6 +271,23 @@ describe('SentryService', () => {
                 imports: [
                     SentryModule.forRootAsync({
                         useClass: TestService
+                    })
+                ]
+            }).compile();
+
+            const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+            expect(sentry).toBeDefined();
+            expect(sentry).toBeInstanceOf(SentryService);
+            // console.log('sentry', sentry);
+            sentry.warn('sentry:warn','context:warn');
+            expect(sentry.warn).toBeInstanceOf(Function);
+        });
+
+        it('should provide the sentry client and call warn with disabled logging', async() => {
+            const mod = await Test.createTestingModule({
+                imports: [
+                    SentryModule.forRootAsync({
+                        useClass: TestServiceNoLogging
                     })
                 ]
             }).compile();
