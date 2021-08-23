@@ -6,20 +6,16 @@ import { SentryService } from "../sentry.service";
 import { SENTRY_TOKEN } from "../sentry.constants";
 
 import * as Sentry from '@sentry/node';
-import { ConsoleLogger } from '@nestjs/common';
 jest.spyOn(Sentry, 'close')
   .mockImplementation(() => Promise.resolve(true));
 const mockCloseSentry = Sentry.close as jest.MockedFunction<typeof Sentry.close>;
 
 describe('SentryService', () => {
-    let logger = new ConsoleLogger('SentryServiceSpec');
-
     let config: SentryModuleOptions = {
         dsn: 'https://45740e3ae4864e77a01ad61a47ea3b7e@o115888.ingest.sentry.io/25956308132020',
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
-        logger
     };
 
     let configWithNoLogger: SentryModuleOptions = {
@@ -35,7 +31,6 @@ describe('SentryService', () => {
         debug: true,
         environment: 'development',
         logLevel: LogLevel.Debug,
-        logger
     };
 
     let failureConfigNoLogger: SentryModuleOptions = {

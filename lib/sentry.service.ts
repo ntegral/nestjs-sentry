@@ -1,4 +1,4 @@
-import { Inject, Injectable, LoggerService } from '@nestjs/common';
+import { ConsoleLogger, Inject, Injectable, LoggerService } from '@nestjs/common';
 import { Options, Client } from '@sentry/types';
 import * as Sentry from '@sentry/node';
 import { OnApplicationShutdown } from '@nestjs/common';
@@ -8,8 +8,10 @@ import { SentryModuleOptions } from './sentry.interfaces';
 
 @Injectable()
 export class SentryService implements LoggerService, OnApplicationShutdown {
+
   app = '@ntegral/nestjs-sentry: ';
   private static serviceInstance: SentryService;
+
   constructor(
     @Inject(SENTRY_MODULE_OPTIONS)
     readonly opts?: SentryModuleOptions,
@@ -18,7 +20,12 @@ export class SentryService implements LoggerService, OnApplicationShutdown {
       // console.log('options not found. Did you use SentryModule.forRoot?');
       return;
     }
-    const { debug, integrations = [], ...sentryOptions } = opts;
+    const { debug, integrations = [], logger, loggerOptions, ...sentryOptions } = opts;
+
+    if (typeof logger === 'undefined') {
+      opts.logger = new ConsoleLogger('', loggerOptions || {});
+    }
+
     Sentry.init({
       ...sentryOptions,
       integrations: [
