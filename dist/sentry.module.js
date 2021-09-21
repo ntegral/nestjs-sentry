@@ -9,17 +9,21 @@ var SentryModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 const common_1 = require("@nestjs/common");
 const sentry_core_module_1 = require("./sentry-core.module");
+const sentry_interceptor_1 = require("./sentry.interceptor");
+const graphql_interceptor_1 = require("./graphql.interceptor");
 let SentryModule = SentryModule_1 = class SentryModule {
     static forRoot(options) {
         return {
             module: SentryModule_1,
             imports: [sentry_core_module_1.SentryCoreModule.forRoot(options)],
+            exports: [sentry_interceptor_1.SentryInterceptor, graphql_interceptor_1.GraphqlInterceptor],
         };
     }
     static forRootAsync(options) {
         return {
             module: SentryModule_1,
             imports: [sentry_core_module_1.SentryCoreModule.forRootAsync(options)],
+            exports: [sentry_interceptor_1.SentryInterceptor, graphql_interceptor_1.GraphqlInterceptor],
         };
     }
 };
