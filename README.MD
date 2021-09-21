@@ -72,8 +72,7 @@ The async way `@ntegral/nestjs-sentry` is to use `SentryModule.forRootAsync`
 ```typescript
 import { Module } from '@nestjs-common';
 import { SentryModule } from '@ntegral/nestjs-sentry';
-import { ConfigModule } from '@ntegral/nestjs-config';
-import { ConfigService } from '@ntegral/nestjs-config';
+import { ConfigModule, ConfigService } from '@nestjs/config'
 
 @Module({
   imports: [
@@ -83,7 +82,7 @@ import { ConfigService } from '@ntegral/nestjs-config';
         dsn: cfg.get('SENTRY_DSN'),
         debug: true | false,
         environment: 'dev' | 'production' | 'some_environment',
-        release: 'some_release', | null, // must create a release in sentry.io dashboard
+        release: 'some_release' | null, // must create a release in sentry.io dashboard
         logLevel: LogLevel.Debug //based on sentry.io loglevel //
       }),
       inject: [ConfigService],
@@ -113,13 +112,35 @@ export class AppService {
 
 ## Interceptors
 
-BREAKING CHANGES: The SentryInterceptor can be used in projects that don't require GraphQL. If you will be needed GraphQL support, use the GraphqlInterceptor.  Using the GraphqlInterceptor will create a dependancy for the @nestjs/graphql package.
+### App interceptors
+
+You can use Sentry interceptor globally for the whole app
+
+```typescript
+import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { SentryInterceptor } from '@ntegral/nestjs-sentry';
+
+@Module({
+  ....
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: SentryInterceptor,
+    },
+  ],
+})
+export class AppModule {}
+```
+
+BREAKING CHANGES: The `SentryInterceptor` can be used in projects that don't require GraphQL. If you will be needed GraphQL support, use the `GraphqlInterceptor`.  Using the `GraphqlInterceptor` will create a dependancy for the `@nestjs/graphql` package.
 
 ```bash
 npm install --save @nestjs/graphql
 ```
 
 Using graphql interceptor globally
+
 ```typescript
 import { Module } from '@nestjs/common';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -137,12 +158,32 @@ import { GraphqlInterceptor } from '@ntegral/nestjs-sentry';
 export class AppModule {}
 ```
 
+### Controller interceptor
+
+You might also intercept errors at controller level with decorator `@UseInterceptors()`
+
+```typescript
+import { Controller, Get, UseInterceptors } from '@nestjs/common';
+import { SentryInterceptor } from '@ntegral/nestjs-sentry';
+
+@UseInterceptors(SentryInterceptor)
+@Controller()
+export class AppController {
+
+  @Get()
+  getHello(): string {
+    throw new Error('Test sentry')
+  }
+}
+```
+
 ## Flushing sentry
-Sentry does not flush all the errors by itself, it does it in background so that it doesn't block the main thread. If 
+
+Sentry does not flush all the errors by itself, it does it in background so that it doesn't block the main thread. If
 you kill the nestjs app forcefully some exceptions don't have to be flushed and logged successfully.
 
 If you want to force that behaviour use the close flag in your options. That is handy if using nestjs as a console
-runner. Keep in mind that you need to have ```app.enableShutdownHooks();``` enabled in order 
+runner. Keep in mind that you need to have ```app.enableShutdownHooks();``` enabled in order
 for closing (flushing) to work.
 
 ```typescript
@@ -160,15 +201,14 @@ import { LogLevel } from '@sentry/types';
       logLevel: LogLevel.Debug //based on sentry.io loglevel //
       close: {
         enabled: true,
-        // Time in milliseconds to forcefully quit the application  
-        timeout?: number,  
+        // Time in milliseconds to forcefully quit the application
+        timeout?: number,
       }
     }),
   ],
 })
 export class AppModule {}
 ```
-
 
 ## Contributing
 
