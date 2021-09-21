@@ -20,11 +20,13 @@ const common_1 = require("@nestjs/common");
 const sentry_constants_1 = require("./sentry.constants");
 const sentry_service_1 = require("./sentry.service");
 const sentry_providers_1 = require("./sentry.providers");
+const sentry_interceptor_1 = require("./sentry.interceptor");
+const graphql_interceptor_1 = require("./graphql.interceptor");
 let SentryCoreModule = SentryCoreModule_1 = class SentryCoreModule {
     static forRoot(options) {
         const provider = sentry_providers_1.createSentryProviders(options);
         return {
-            exports: [provider, sentry_service_1.SentryService],
+            exports: [provider, sentry_service_1.SentryService, sentry_interceptor_1.SentryInterceptor, graphql_interceptor_1.GraphqlInterceptor],
             module: SentryCoreModule_1,
             providers: [provider, sentry_service_1.SentryService],
         };
@@ -36,7 +38,7 @@ let SentryCoreModule = SentryCoreModule_1 = class SentryCoreModule {
             useFactory: (options) => new sentry_service_1.SentryService(options),
         };
         return {
-            exports: [provider, sentry_service_1.SentryService],
+            exports: [provider, sentry_service_1.SentryService, sentry_interceptor_1.SentryInterceptor, graphql_interceptor_1.GraphqlInterceptor],
             imports: options.imports,
             module: SentryCoreModule_1,
             providers: [

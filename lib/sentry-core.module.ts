@@ -16,6 +16,8 @@ import {
 } from './sentry.constants';
 import { SentryService } from './sentry.service';
 import { createSentryProviders } from './sentry.providers';
+import { SentryInterceptor } from "./sentry.interceptor";
+import { GraphqlInterceptor } from "./graphql.interceptor";
 
 @Global()
 @Module({})
@@ -25,7 +27,7 @@ export class SentryCoreModule {
         const provider = createSentryProviders(options);
 
         return {
-            exports: [provider, SentryService],
+            exports: [provider, SentryService, SentryInterceptor, GraphqlInterceptor],
             module: SentryCoreModule,
             providers: [provider, SentryService],
         };
@@ -41,7 +43,7 @@ export class SentryCoreModule {
         };
 
         return {
-            exports: [provider, SentryService],
+            exports: [provider, SentryService, SentryInterceptor, GraphqlInterceptor],
             imports: options.imports,
             module: SentryCoreModule,
             providers: [
