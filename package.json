@@ -66,6 +66,6 @@
     "tsconfig-paths": "^3.10.1"
   },
   "optionalDependencies": {
-    "@nestjs/graphql": "8.0.2"
+    "@nestjs/graphql": "^8.0.2 || ^9.0.4"
   }
 }
