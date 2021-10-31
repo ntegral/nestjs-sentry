@@ -25,7 +25,7 @@ import { SentryInterceptorOptions, SentryInterceptorOptionsFilter } from './sent
 @Injectable()
 export class SentryInterceptor implements NestInterceptor {
 
-  private client: SentryService = SentryService.SentryServiceInstance()
+  protected readonly client: SentryService = SentryService.SentryServiceInstance()
   constructor(
     private readonly options?: SentryInterceptorOptions
   ) {}
@@ -36,34 +36,38 @@ export class SentryInterceptor implements NestInterceptor {
       tap(null, (exception) => {
         if(this.shouldReport(exception)) {
           this.client.instance().withScope((scope) => {
-            switch (context.getType<ContextType>()) {
-              case 'http':
-                return this.captureHttpException(
-                  scope, 
-                  context.switchToHttp(), 
-                  exception
-                );
-              case 'rpc':
-                return this.captureRpcException(
-                  scope,
-                  context.switchToRpc(),
-                  exception,
-                );
-              case 'ws':
-                return this.captureWsException(
-                  scope,
-                  context.switchToWs(),
-                  exception,
-                );
-            }
+            this.captureException(context, scope, exception);
           })
         }
       })
     );
   }
 
+  protected captureException(context: ExecutionContext, scope: Scope, exception: any) {
+    switch (context.getType<ContextType>()) {
+      case 'http':
+        return this.captureHttpException(
+          scope, 
+          context.switchToHttp(), 
+          exception
+        );
+      case 'rpc':
+        return this.captureRpcException(
+          scope,
+          context.switchToRpc(),
+          exception,
+        );
+      case 'ws':
+        return this.captureWsException(
+          scope,
+          context.switchToWs(),
+          exception,
+        );
+    }
+  }
+
   private captureHttpException(scope: Scope, http: HttpArgumentsHost, exception: any): void {
-    const data = Handlers.parseRequest(<any>{},http.getRequest(), {});
+    const data = Handlers.parseRequest(<any>{},http.getRequest(), this.options);
 
     scope.setExtra('req', data.request);
     

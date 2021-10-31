@@ -200,7 +200,7 @@ import { GraphqlInterceptor } from '@ntegral/nestjs-sentry';
   providers: [
     {
       provide: APP_INTERCEPTOR,
-      useClass: GraphqlInterceptor,
+      useFactory: () => new GraphqlInterceptor(),
     },
   ],
 })

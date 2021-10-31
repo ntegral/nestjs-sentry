@@ -22,17 +22,20 @@ let SentryInterceptor = class SentryInterceptor {
         return next.handle().pipe(operators_1.tap(null, (exception) => {
             if (this.shouldReport(exception)) {
                 this.client.instance().withScope((scope) => {
-                    switch (context.getType()) {
-                        case 'http':
-                            return this.captureHttpException(scope, context.switchToHttp(), exception);
-                        case 'rpc':
-                            return this.captureRpcException(scope, context.switchToRpc(), exception);
-                        case 'ws':
-                            return this.captureWsException(scope, context.switchToWs(), exception);
-                    }
+                    this.captureException(context, scope, exception);
                 });
             }
         }));
+    }
+    captureException(context, scope, exception) {
+        switch (context.getType()) {
+            case 'http':
+                return this.captureHttpException(scope, context.switchToHttp(), exception);
+            case 'rpc':
+                return this.captureRpcException(scope, context.switchToRpc(), exception);
+            case 'ws':
+                return this.captureWsException(scope, context.switchToWs(), exception);
+        }
     }
     captureHttpException(scope, http, exception) {
         const data = node_1.Handlers.parseRequest({}, http.getRequest(), {});
