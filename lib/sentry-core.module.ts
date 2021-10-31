@@ -25,9 +25,9 @@ export class SentryCoreModule {
         const provider = createSentryProviders(options);
 
         return {
-            exports: [provider, SentryService],
+            exports: [provider],
             module: SentryCoreModule,
-            providers: [provider, SentryService],
+            providers: [provider],
         };
     }
 

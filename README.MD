@@ -59,7 +59,7 @@ import { LogLevel } from '@sentry/types';
       dsn: 'sentry_io_dsn',
       debug: true | false,
       environment: 'dev' | 'production' | 'some_environment',
-      release: 'some_release', | null, // must create a release in sentry.io dashboard
+      release: 'some_release' | null, // must create a release in sentry.io dashboard
       logLevel: LogLevel.Debug //based on sentry.io loglevel //
     }),
   ],
@@ -83,7 +83,7 @@ import { ConfigService } from '@ntegral/nestjs-config';
         dsn: cfg.get('SENTRY_DSN'),
         debug: true | false,
         environment: 'dev' | 'production' | 'some_environment',
-        release: 'some_release', | null, // must create a release in sentry.io dashboard
+        release: 'some_release' | null, // must create a release in sentry.io dashboard
         logLevel: LogLevel.Debug //based on sentry.io loglevel //
       }),
       inject: [ConfigService],
@@ -109,6 +109,76 @@ export class AppService {
       ... and more
   }
 }
+```
+
+## Logging
+
+You can provide a custom logger which implements `NestJS`'s `LoggerService` interface: 
+
+```typescript
+import { Module } from '@nestjs-common';
+import { SentryModule } from '@ntegral/nestjs-sentry';
+import { LogLevel } from '@sentry/types';
+
+@Module({
+  imports: [
+    SentryModule.forRoot({
+      dsn: 'sentry_io_dsn',
+      debug: true | false,
+      environment: 'dev' | 'production' | 'some_environment',
+      release: 'some_release' | null, // must create a release in sentry.io dashboard
+      logLevel: LogLevel.Debug, //based on sentry.io loglevel //
+      logger: new MyLogger(), // implements LoggerService
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+Or completely disable logging:
+
+```typescript
+import { Module } from '@nestjs-common';
+import { SentryModule } from '@ntegral/nestjs-sentry';
+import { LogLevel } from '@sentry/types';
+
+@Module({
+  imports: [
+    SentryModule.forRoot({
+      dsn: 'sentry_io_dsn',
+      debug: true | false,
+      environment: 'dev' | 'production' | 'some_environment',
+      release: 'some_release' | null, // must create a release in sentry.io dashboard
+      logLevel: LogLevel.Debug, //based on sentry.io loglevel //
+      logger: null
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+Or you can provide default logger (`ConsoleLogger`) options:
+
+```typescript
+import { Module } from '@nestjs-common';
+import { SentryModule } from '@ntegral/nestjs-sentry';
+import { LogLevel } from '@sentry/types';
+
+@Module({
+  imports: [
+    SentryModule.forRoot({
+      dsn: 'sentry_io_dsn',
+      debug: true | false,
+      environment: 'dev' | 'production' | 'some_environment',
+      release: 'some_release' | null, // must create a release in sentry.io dashboard
+      logLevel: LogLevel.Debug, //based on sentry.io loglevel //
+      loggerOptions: {
+        timestamp: true,
+      },
+    }),
+  ],
+})
+export class AppModule {}
 ```
 
 ## Interceptors
