@@ -8,7 +8,6 @@ import { SENTRY_TOKEN } from "../sentry.constants";
 import * as Sentry from '@sentry/node';
 jest.spyOn(Sentry, 'close')
   .mockImplementation(() => Promise.resolve(true));
-const mockCloseSentry = Sentry.close as jest.MockedFunction<typeof Sentry.close>;
 
 const SENTRY_NOT_CONFIGURE_ERROR = 'Please confirm that Sentry is configured correctly';
 
@@ -42,12 +41,6 @@ describe('SentryService', () => {
         logLevel: LogLevel.Debug,
         logger: null
     };
-
-    class TestService implements SentryOptionsFactory {
-        createSentryModuleOptions(): SentryModuleOptions {
-            return config;
-        }
-    }
 
     class TestServiceNoLogging implements SentryOptionsFactory {
         createSentryModuleOptions(): SentryModuleOptions {
