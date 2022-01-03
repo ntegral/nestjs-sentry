@@ -5,6 +5,7 @@ import { SentryModuleOptions, SentryOptionsFactory } from '../sentry.interfaces'
 import { LogLevel } from '@sentry/types';
 import { SentryService } from '../sentry.service';
 import { SENTRY_TOKEN } from '../sentry.constants';
+import { Module } from '@nestjs/common';
 
 describe('SentryModule', () => {
     let config: SentryModuleOptions = {
@@ -19,6 +20,12 @@ describe('SentryModule', () => {
             return config;
         }
     }
+
+    @Module({
+        exports: [TestService],
+        providers: [TestService]
+    })
+    class TestModule {}
 
     describe('forRoot', () => {
         it('should provide the sentry client', async() => {
@@ -66,4 +73,21 @@ describe('SentryModule', () => {
             expect(sentry).toBeInstanceOf(SentryService);
         });
     });
+
+    describe('when the `useExisting` option is used', () => {
+        it('should provide the stripe client', async () => {
+          const mod = await Test.createTestingModule({
+            imports: [
+              SentryModule.forRootAsync({
+                imports: [TestModule],
+                useExisting: TestService,
+              }),
+            ],
+          }).compile();
+  
+          const sentry = mod.get<SentryService>(SENTRY_TOKEN);
+          expect(sentry).toBeDefined();
+          expect(sentry).toBeInstanceOf(SentryService);
+        });
+      });
 })

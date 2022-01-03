@@ -6,6 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GraphqlInterceptor = void 0;
 const common_1 = require("@nestjs/common");
 const node_1 = require("@sentry/node");
 const _1 = require(".");
@@ -39,7 +40,7 @@ let GraphqlInterceptor = class GraphqlInterceptor extends _1.SentryInterceptor {
     }
 };
 GraphqlInterceptor = __decorate([
-    common_1.Injectable()
+    (0, common_1.Injectable)()
 ], GraphqlInterceptor);
 exports.GraphqlInterceptor = GraphqlInterceptor;
 //# sourceMappingURL=graphql.interceptor.js.map

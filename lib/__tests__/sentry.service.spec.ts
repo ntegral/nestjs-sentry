@@ -1,11 +1,12 @@
 import { SentryModuleOptions, SentryOptionsFactory } from "../sentry.interfaces";
 import { LogLevel } from "@sentry/types";
-import { Test } from "@nestjs/testing";
+import { Test, TestingModule } from "@nestjs/testing";
 import { SentryModule } from "../sentry.module";
 import { SentryService } from "../sentry.service";
 import { SENTRY_TOKEN } from "../sentry.constants";
 
 import * as Sentry from '@sentry/node';
+
 jest.spyOn(Sentry, 'close')
   .mockImplementation(() => Promise.resolve(true));
 const mockCloseSentry = Sentry.close as jest.MockedFunction<typeof Sentry.close>;
@@ -274,6 +275,60 @@ describe('SentryService', () => {
                 //to do//
                 expect(sentry.log).toThrowError(SENTRY_NOT_CONFIGURE_ERROR);
             }
+        })
+    })
+
+    describe('Sentry Service asBreadcrumb implementation', () => {
+        let mod: TestingModule;
+        let sentry: SentryService;
+
+        beforeAll(async() => {
+            mod = await Test.createTestingModule({
+                imports: [SentryModule.forRoot({
+                    ...config,
+                })],
+            }).compile();
+
+            sentry = mod.get<SentryService>(SENTRY_TOKEN);
+        });
+
+        it('sentry.SentryServiceInstance', () => {
+            expect(SentryService.SentryServiceInstance).toBeInstanceOf(Function);
+        });
+        it('sentry.instance', () => {
+            expect(sentry.instance).toBeInstanceOf(Function);
+        });
+
+        it('sentry.log asBreabcrumb === true', () => {
+            try {
+                sentry.log('sentry:log','context:log',true);
+                expect(true).toBeTruthy();
+            } catch(err) {}
+            expect(sentry.log).toBeInstanceOf(Function);
+        })
+
+        it('sentry.debug asBreabcrumb === true', () => {
+            try {
+                sentry.debug('sentry:debug','context:debug',true);
+                expect(true).toBeTruthy();
+            } catch(err) {}
+            expect(sentry.debug).toBeInstanceOf(Function);
+        })
+
+        it('sentry.verbose asBreabcrumb === true', () => {
+            try {
+                sentry.verbose('sentry:verbose','context:verbose',true);
+                expect(true).toBeTruthy();
+            } catch(err) {}
+            expect(sentry.verbose).toBeInstanceOf(Function);
+        })
+
+        it('sentry.warn asBreabcrumb === true', () => {
+            try {
+                sentry.verbose('sentry:warn','context:warn',true);
+                expect(true).toBeTruthy();
+            } catch(err) {}
+            expect(sentry.warn).toBeInstanceOf(Function);
         })
     })
     

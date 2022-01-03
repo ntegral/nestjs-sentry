@@ -1,1 +1,1 @@
-export declare const makeInjectableDecorator: (token: string | symbol) => () => ParameterDecorator;
+export declare const makeInjectableDecorator: (token: string | symbol) => (() => ParameterDecorator);

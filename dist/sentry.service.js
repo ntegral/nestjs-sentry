@@ -33,6 +33,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 var SentryService_1;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SentryService = void 0;
 const common_1 = require("@nestjs/common");
 const Sentry = require("@sentry/node");
 const sentry_constants_1 = require("./sentry.constants");
@@ -67,11 +68,19 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
         }
         return SentryService_1.serviceInstance;
     }
-    log(message, context) {
+    log(message, context, asBreadcrumb) {
         message = `${this.app} ${message}`;
         try {
-            Sentry.captureMessage(message, Sentry.Severity.Log);
             super.log(message, context);
+            asBreadcrumb ?
+                Sentry.addBreadcrumb({
+                    message,
+                    level: Sentry.Severity.Log,
+                    data: {
+                        context
+                    }
+                }) :
+                Sentry.captureMessage(message, Sentry.Severity.Log);
         }
         catch (err) { }
     }
@@ -83,27 +92,51 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
         }
         catch (err) { }
     }
-    warn(message, context) {
+    warn(message, context, asBreadcrumb) {
         message = `${this.app} ${message}`;
         try {
             super.warn(message, context);
-            Sentry.captureMessage(message, Sentry.Severity.Warning);
+            asBreadcrumb ?
+                Sentry.addBreadcrumb({
+                    message,
+                    level: Sentry.Severity.Warning,
+                    data: {
+                        context
+                    }
+                }) :
+                Sentry.captureMessage(message, Sentry.Severity.Warning);
         }
         catch (err) { }
     }
-    debug(message, context) {
+    debug(message, context, asBreadcrumb) {
         message = `${this.app} ${message}`;
         try {
             super.debug(message, context);
-            Sentry.captureMessage(message, Sentry.Severity.Debug);
+            asBreadcrumb ?
+                Sentry.addBreadcrumb({
+                    message,
+                    level: Sentry.Severity.Debug,
+                    data: {
+                        context
+                    }
+                }) :
+                Sentry.captureMessage(message, Sentry.Severity.Debug);
         }
         catch (err) { }
     }
-    verbose(message, context) {
+    verbose(message, context, asBreadcrumb) {
         message = `${this.app} ${message}`;
         try {
             super.verbose(message, context);
-            Sentry.captureMessage(message, Sentry.Severity.Info);
+            asBreadcrumb ?
+                Sentry.addBreadcrumb({
+                    message,
+                    level: Sentry.Severity.Info,
+                    data: {
+                        context
+                    }
+                }) :
+                Sentry.captureMessage(message, Sentry.Severity.Info);
         }
         catch (err) { }
     }
@@ -120,8 +153,8 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
     }
 };
 SentryService = SentryService_1 = __decorate([
-    common_1.Injectable(),
-    __param(0, common_1.Inject(sentry_constants_1.SENTRY_MODULE_OPTIONS)),
+    (0, common_1.Injectable)(),
+    __param(0, (0, common_1.Inject)(sentry_constants_1.SENTRY_MODULE_OPTIONS)),
     __metadata("design:paramtypes", [Object])
 ], SentryService);
 exports.SentryService = SentryService;

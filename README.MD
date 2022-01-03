@@ -111,6 +111,38 @@ export class AppService {
 }
 ```
 
+You can instruct Nest to use the SentryService as the default logger:
+
+```typescript
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule, { logger: false });
+
+  app.useLogger(SentryService.SentryServiceInstance());
+  await app.listen(3000);
+}
+bootstrap();
+```
+
+You can instuct use the SentryService to log non-error messages as breadcrumbs or use the native Sentry.addBreadcrumb method.
+
+```typescript
+import { Injectable } from '@nestjs/common';
+import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
+import {  Severity } from '@sentry/types';
+
+@Injectable()
+export class AppService {
+  constructor(@InjectSentry() private readonly client: SentryService) {
+    client.log('AppSevice Loaded','test', true); // creates log asBreadcrumb //
+    client.instance().addBreadcrumb({level: Severity.Debug, message: 'How to use native breadcrumb', data: { context: 'WhatEver'}})
+    client.debug('AppService Debug', 'context');
+  }
+  getHello(): string {
+    return 'Hello World!';
+  }
+}
+```
+
 ## Interceptors
 
 BREAKING CHANGES: The SentryInterceptor can be used in projects that don't require GraphQL. If you will be needed GraphQL support, use the GraphqlInterceptor.  Using the GraphqlInterceptor will create a dependancy for the @nestjs/graphql package.

@@ -16,13 +16,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var SentryCoreModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SentryCoreModule = void 0;
 const common_1 = require("@nestjs/common");
 const sentry_constants_1 = require("./sentry.constants");
 const sentry_service_1 = require("./sentry.service");
 const sentry_providers_1 = require("./sentry.providers");
 let SentryCoreModule = SentryCoreModule_1 = class SentryCoreModule {
     static forRoot(options) {
-        const provider = sentry_providers_1.createSentryProviders(options);
+        const provider = (0, sentry_providers_1.createSentryProviders)(options);
         return {
             exports: [provider, sentry_service_1.SentryService],
             module: SentryCoreModule_1,
@@ -78,8 +79,8 @@ let SentryCoreModule = SentryCoreModule_1 = class SentryCoreModule {
     }
 };
 SentryCoreModule = SentryCoreModule_1 = __decorate([
-    common_1.Global(),
-    common_1.Module({})
+    (0, common_1.Global)(),
+    (0, common_1.Module)({})
 ], SentryCoreModule);
 exports.SentryCoreModule = SentryCoreModule;
 //# sourceMappingURL=sentry-core.module.js.map

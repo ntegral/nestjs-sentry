@@ -1,8 +1,7 @@
 import { Inject, Injectable, ConsoleLogger } from '@nestjs/common';
+import { OnApplicationShutdown } from '@nestjs/common';
 import { Options, Client } from '@sentry/types';
 import * as Sentry from '@sentry/node';
-import { OnApplicationShutdown } from '@nestjs/common';
-
 import { SENTRY_MODULE_OPTIONS } from './sentry.constants';
 import { SentryModuleOptions } from './sentry.interfaces';
 
@@ -52,11 +51,19 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
     return SentryService.serviceInstance;
   }
 
-  log(message: string, context?: string) {
+  log(message: string, context?: string, asBreadcrumb?: boolean) {
     message = `${this.app} ${message}`;
     try {
-      Sentry.captureMessage(message, Sentry.Severity.Log);
       super.log(message, context);
+      asBreadcrumb ?
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Log,
+        data: {
+          context
+        }
+      }) :
+      Sentry.captureMessage(message, Sentry.Severity.Log);
     } catch (err) {}
   }
 
@@ -68,26 +75,50 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
     } catch (err) {}
   }
 
-  warn(message: string, context?: string) {
+  warn(message: string, context?: string, asBreadcrumb?: boolean) {
     message = `${this.app} ${message}`;
     try {
       super.warn(message, context);
+      asBreadcrumb ?
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Warning,
+        data: {
+          context
+        }
+      }) :
       Sentry.captureMessage(message, Sentry.Severity.Warning);
     } catch (err) {}
   }
 
-  debug(message: string, context?: string) {
+  debug(message: string, context?: string, asBreadcrumb?: boolean) {
     message = `${this.app} ${message}`;
     try {
       super.debug(message, context);
+      asBreadcrumb ?
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Debug,
+        data: {
+          context
+        }
+      }) :
       Sentry.captureMessage(message, Sentry.Severity.Debug);
     } catch (err) {}
   }
 
-  verbose(message: string, context?: string) {
+  verbose(message: string, context?: string, asBreadcrumb?: boolean) {
     message = `${this.app} ${message}`;
     try {
       super.verbose(message, context);
+      asBreadcrumb ?
+      Sentry.addBreadcrumb({
+        message,
+        level: Sentry.Severity.Info,
+        data: {
+          context
+        }
+      }) :
       Sentry.captureMessage(message, Sentry.Severity.Info);
     } catch (err) {}
   }
