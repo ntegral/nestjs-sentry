@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1641147969282" clover="3.2.0">
-  <project timestamp="1641147969282" name="All files">
+<coverage generated="1654074240227" clover="3.2.0">
+  <project timestamp="1654074240228" name="All files">
     <metrics statements="142" coveredstatements="126" conditionals="154" coveredconditionals="98" methods="45" coveredmethods="38" elements="341" coveredelements="262" complexity="0" loc="142" ncloc="142" packages="1" files="7" classes="7"/>
-    <file name="injectDecoratoryFactory.ts" path="/Users/dhardy/Projects/npm/sentry/sentry-mod/nestjs-sentry/lib/injectDecoratoryFactory.ts">
+    <file name="injectDecoratoryFactory.ts" path="/home/keigo/repos/nestjs-sentry/lib/injectDecoratoryFactory.ts">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -10,7 +10,7 @@
       <line num="13" count="2" type="stmt"/>
       <line num="14" count="1" type="stmt"/>
     </file>
-    <file name="sentry-core.module.ts" path="/Users/dhardy/Projects/npm/sentry/sentry-mod/nestjs-sentry/lib/sentry-core.module.ts">
+    <file name="sentry-core.module.ts" path="/home/keigo/repos/nestjs-sentry/lib/sentry-core.module.ts">
       <metrics statements="35" coveredstatements="33" conditionals="43" coveredconditionals="28" methods="15" coveredmethods="14"/>
       <line num="2" count="3" type="cond" truecount="3" falsecount="0"/>
       <line num="3" count="3" type="cond" truecount="1" falsecount="3"/>
@@ -48,14 +48,14 @@
       <line num="81" count="3" type="stmt"/>
       <line num="85" count="3" type="stmt"/>
     </file>
-    <file name="sentry.constants.ts" path="/Users/dhardy/Projects/npm/sentry/sentry-mod/nestjs-sentry/lib/sentry.constants.ts">
+    <file name="sentry.constants.ts" path="/home/keigo/repos/nestjs-sentry/lib/sentry.constants.ts">
       <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="2" count="3" type="stmt"/>
       <line num="3" count="3" type="stmt"/>
       <line num="4" count="3" type="stmt"/>
       <line num="5" count="3" type="stmt"/>
     </file>
-    <file name="sentry.decorator.ts" path="/Users/dhardy/Projects/npm/sentry/sentry-mod/nestjs-sentry/lib/sentry.decorator.ts">
+    <file name="sentry.decorator.ts" path="/home/keigo/repos/nestjs-sentry/lib/sentry.decorator.ts">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="2" count="1" type="stmt"/>
       <line num="3" count="1" type="stmt"/>
@@ -64,7 +64,7 @@
       <line num="6" count="1" type="stmt"/>
       <line num="10" count="1" type="stmt"/>
     </file>
-    <file name="sentry.module.ts" path="/Users/dhardy/Projects/npm/sentry/sentry-mod/nestjs-sentry/lib/sentry.module.ts">
+    <file name="sentry.module.ts" path="/home/keigo/repos/nestjs-sentry/lib/sentry.module.ts">
       <metrics statements="14" coveredstatements="13" conditionals="22" coveredconditionals="8" methods="3" coveredmethods="3"/>
       <line num="2" count="3" type="cond" truecount="3" falsecount="0"/>
       <line num="3" count="3" type="cond" truecount="1" falsecount="3"/>
@@ -81,7 +81,7 @@
       <line num="27" count="3" type="stmt"/>
       <line num="30" count="3" type="stmt"/>
     </file>
-    <file name="sentry.providers.ts" path="/Users/dhardy/Projects/npm/sentry/sentry-mod/nestjs-sentry/lib/sentry.providers.ts">
+    <file name="sentry.providers.ts" path="/home/keigo/repos/nestjs-sentry/lib/sentry.providers.ts">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
       <line num="2" count="3" type="stmt"/>
       <line num="3" count="3" type="stmt"/>
@@ -90,7 +90,7 @@
       <line num="7" count="15" type="stmt"/>
       <line num="12" count="3" type="stmt"/>
     </file>
-    <file name="sentry.service.ts" path="/Users/dhardy/Projects/npm/sentry/sentry-mod/nestjs-sentry/lib/sentry.service.ts">
+    <file name="sentry.service.ts" path="/home/keigo/repos/nestjs-sentry/lib/sentry.service.ts">
       <metrics statements="72" coveredstatements="59" conditionals="89" coveredconditionals="62" methods="24" coveredmethods="18"/>
       <line num="2" count="3" type="cond" truecount="3" falsecount="0"/>
       <line num="3" count="3" type="cond" truecount="1" falsecount="3"/>
