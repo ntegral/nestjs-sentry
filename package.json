@@ -75,8 +75,5 @@
   },
   "optionalDependencies": {
     "@nestjs/graphql": "^8.0.2 || ^9.0.4"
-  },
-  "volta": {
-    "node": "14.19.3"
   }
 }
