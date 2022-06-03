@@ -84,7 +84,7 @@ import { ConfigService } from '@ntegral/nestjs-config';
         debug: true | false,
         environment: 'dev' | 'production' | 'some_environment',
         release: 'some_release', | null, // must create a release in sentry.io dashboard
-        logLevel: LogLevel.Debug //based on sentry.io loglevel //
+        logLevels: ['debug'] //based on sentry.io loglevel //
       }),
       inject: [ConfigService],
     })
@@ -189,7 +189,7 @@ import { LogLevel } from '@sentry/types';
       debug: true | false,
       environment: 'dev' | 'production' | 'some_environment',
       release: 'some_release', | null, // must create a release in sentry.io dashboard
-      logLevel: LogLevel.Debug //based on sentry.io loglevel //
+      logLevels: ['debug'] //based on sentry.io loglevel //
       close: {
         enabled: true,
         // Time in milliseconds to forcefully quit the application  
