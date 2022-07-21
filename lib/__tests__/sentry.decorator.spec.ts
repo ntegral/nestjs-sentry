@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LogLevel } from "@sentry/types";
 import { SentryModuleOptions } from '../sentry.interfaces';
 import { Injectable } from '@nestjs/common';
 import { InjectSentry } from '../sentry.decorator';
@@ -12,7 +11,7 @@ describe('InjectS3', () => {
         dsn: 'https://45740e3ae4864e77a01ad61a47ea3b7e@o115888.ingest.sentry.io/25956308132020',
         debug: true,
         environment: 'development',
-        logLevel: LogLevel.Debug,
+        logLevels: ['debug'],
     }
     let module: TestingModule;
 

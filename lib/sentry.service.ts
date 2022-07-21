@@ -1,6 +1,6 @@
 import { Inject, Injectable, ConsoleLogger } from '@nestjs/common';
 import { OnApplicationShutdown } from '@nestjs/common';
-import { Options, Client } from '@sentry/types';
+import { ClientOptions, Client } from '@sentry/types';
 import * as Sentry from '@sentry/node';
 import { SENTRY_MODULE_OPTIONS } from './sentry.constants';
 import { SentryModuleOptions } from './sentry.interfaces';
@@ -31,8 +31,8 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
             } else {
               (
                 Sentry.getCurrentHub().getClient<
-                  Client<Options>
-                >() as Client<Options>
+                  Client<ClientOptions>
+                >() as Client<ClientOptions>
               ).captureException(err);
               process.exit(1);
             }
@@ -58,12 +58,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({
         message,
-        level: Sentry.Severity.Log,
+        level: 'log',
         data: {
           context
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Log);
+      Sentry.captureMessage(message, 'log');
     } catch (err) {}
   }
 
@@ -71,7 +71,7 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
     message = `${this.app} ${message}`;
     try {
       super.error(message, trace, context);
-      Sentry.captureMessage(message, Sentry.Severity.Error);
+      Sentry.captureMessage(message, 'error');
     } catch (err) {}
   }
 
@@ -82,12 +82,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({
         message,
-        level: Sentry.Severity.Warning,
+        level: 'warning',
         data: {
           context
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Warning);
+      Sentry.captureMessage(message, 'warning');
     } catch (err) {}
   }
 
@@ -98,12 +98,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({
         message,
-        level: Sentry.Severity.Debug,
+        level: 'debug',
         data: {
           context
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Debug);
+      Sentry.captureMessage(message, 'debug');
     } catch (err) {}
   }
 
@@ -114,12 +114,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({
         message,
-        level: Sentry.Severity.Info,
+        level: 'info',
         data: {
           context
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Info);
+      Sentry.captureMessage(message, 'info');
     } catch (err) {}
   }
 
