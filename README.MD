@@ -51,7 +51,6 @@ The simplest way to use `@ntegral/nestjs-sentry` is to use `SentryModule.forRoot
 ```typescript
 import { Module } from '@nestjs-common';
 import { SentryModule } from '@ntegral/nestjs-sentry';
-import { LogLevel } from '@sentry/types';
 
 @Module({
   imports: [
@@ -60,7 +59,7 @@ import { LogLevel } from '@sentry/types';
       debug: true | false,
       environment: 'dev' | 'production' | 'some_environment',
       release: 'some_release', | null, // must create a release in sentry.io dashboard
-      logLevel: LogLevel.Debug //based on sentry.io loglevel //
+      logLevels: ['debug'] //based on sentry.io loglevel //
     }),
   ],
 })
@@ -84,7 +83,7 @@ import { ConfigService } from '@ntegral/nestjs-config';
         debug: true | false,
         environment: 'dev' | 'production' | 'some_environment',
         release: 'some_release', | null, // must create a release in sentry.io dashboard
-        logLevel: LogLevel.Debug //based on sentry.io loglevel //
+        logLevels: ['debug'] //based on sentry.io loglevel //
       }),
       inject: [ConfigService],
     })
@@ -128,13 +127,12 @@ You can instuct use the SentryService to log non-error messages as breadcrumbs o
 ```typescript
 import { Injectable } from '@nestjs/common';
 import { InjectSentry, SentryService } from '@ntegral/nestjs-sentry';
-import {  Severity } from '@sentry/types';
 
 @Injectable()
 export class AppService {
   constructor(@InjectSentry() private readonly client: SentryService) {
     client.log('AppSevice Loaded','test', true); // creates log asBreadcrumb //
-    client.instance().addBreadcrumb({level: Severity.Debug, message: 'How to use native breadcrumb', data: { context: 'WhatEver'}})
+    client.instance().addBreadcrumb({level: 'debug' , message: 'How to use native breadcrumb', data: { context: 'WhatEver'}})
     client.debug('AppService Debug', 'context');
   }
   getHello(): string {
@@ -169,6 +167,29 @@ import { GraphqlInterceptor } from '@ntegral/nestjs-sentry';
 export class AppModule {}
 ```
 
+Using the sentry interceptor globally
+```typescript
+import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { SentryInterceptor } from '@ntegral/nestjs-sentry';
+
+@Module({
+  ....
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useFactory: () => new SentryInterceptor({
+        filters: [{
+          type: HttpException,
+          filter: (exception: HttpException) => 500 > exception.getStatus() // Only report 500 errors
+        }]
+      }),
+    }
+  ],
+})
+export class AppModule {}
+```
+
 ## Flushing sentry
 Sentry does not flush all the errors by itself, it does it in background so that it doesn't block the main thread. If 
 you kill the nestjs app forcefully some exceptions don't have to be flushed and logged successfully.
@@ -180,7 +201,6 @@ for closing (flushing) to work.
 ```typescript
 import { Module } from '@nestjs-common';
 import { SentryModule } from '@ntegral/nestjs-sentry';
-import { LogLevel } from '@sentry/types';
 
 @Module({
   imports: [
@@ -189,7 +209,7 @@ import { LogLevel } from '@sentry/types';
       debug: true | false,
       environment: 'dev' | 'production' | 'some_environment',
       release: 'some_release', | null, // must create a release in sentry.io dashboard
-      logLevel: LogLevel.Debug //based on sentry.io loglevel //
+      logLevels: ['debug'] //based on sentry.io loglevel //
       close: {
         enabled: true,
         // Time in milliseconds to forcefully quit the application  

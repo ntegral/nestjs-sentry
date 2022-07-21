@@ -2,6 +2,7 @@
 import {
   CallHandler,
   ExecutionContext,
+  HttpException,
   Injectable,
   NestInterceptor
 } from '@nestjs/common';
@@ -33,17 +34,17 @@ export class SentryInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     // first param would be for events, second is for errors
     return next.handle().pipe(
-      tap(null, (exception) => {
+      tap(null, (exception : HttpException) => {
         if(this.shouldReport(exception)) {
           this.client.instance().withScope((scope) => {
-            this.captureException(context, scope, exception);
+            return this.captureException(context, scope, exception);
           })
         }
       })
     );
   }
 
-  protected captureException(context: ExecutionContext, scope: Scope, exception: any) {
+  protected captureException(context: ExecutionContext, scope: Scope, exception: HttpException) {
     switch (context.getType<ContextType>()) {
       case 'http':
         return this.captureHttpException(
@@ -66,7 +67,7 @@ export class SentryInterceptor implements NestInterceptor {
     }
   }
 
-  private captureHttpException(scope: Scope, http: HttpArgumentsHost, exception: any): void {
+  private captureHttpException(scope: Scope, http: HttpArgumentsHost, exception: HttpException): void {
     const data = Handlers.parseRequest(<any>{},http.getRequest(), this.options);
 
     scope.setExtra('req', data.request);
