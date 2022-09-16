@@ -171,7 +171,7 @@ export class AppModule {}
 
 ## Flushing sentry
 Sentry does not flush all the errors by itself, it does it in background so that it doesn't block the main thread. If 
-you kill the nestjs app forcefully some exceptions don't have to be flushed and logged successfully.
+you kill the nestjs app forcefully some exceptions have to be flushed and logged successfully.
 
 If you want to force that behaviour use the close flag in your options. That is handy if using nestjs as a console
 runner. Keep in mind that you need to have ```app.enableShutdownHooks();``` enabled in order 
