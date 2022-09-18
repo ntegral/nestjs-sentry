@@ -2,7 +2,6 @@ import { Test } from '@nestjs/testing';
 
 import { SentryModule  } from '../sentry.module';
 import { SentryModuleOptions, SentryOptionsFactory } from '../sentry.interfaces';
-import { LogLevel } from '@sentry/types';
 import { SentryService } from '../sentry.service';
 import { SENTRY_TOKEN } from '../sentry.constants';
 import { Module } from '@nestjs/common';
@@ -12,7 +11,7 @@ describe('SentryModule', () => {
         dsn: 'https://45740e3ae4864e77a01ad61a47ea3b7e@o115888.ingest.sentry.io/25956308132020',
         debug: true,
         environment: 'development',
-        logLevel: LogLevel.Debug,
+        logLevels: ['debug'],
     }
 
     class TestService implements SentryOptionsFactory {

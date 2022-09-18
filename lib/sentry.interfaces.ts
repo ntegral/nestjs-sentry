@@ -1,7 +1,7 @@
 import { ModuleMetadata, Type } from "@nestjs/common/interfaces";
 import { Integration, Options } from '@sentry/types';
-import { Severity } from "@sentry/node";
-import { ConsoleLoggerOptions } from "@nestjs/common";
+import { ConsoleLoggerOptions, HttpException } from "@nestjs/common";
+import { SeverityLevel } from "@sentry/node";
 
 export interface SentryCloseOptions {
     enabled: boolean;
@@ -41,7 +41,7 @@ export interface SentryInterceptorOptions {
     tags?: { [key: string]: string };
     extra?: { [key: string]: any };
     fingerprint?: string[];
-    level?: Severity;
+    level?: SeverityLevel;
 
     // https://github.com/getsentry/sentry-javascript/blob/master/packages/node/src/handlers.ts#L163
     request?: boolean;
