@@ -1,7 +1,7 @@
-import { ModuleMetadata, Type } from "@nestjs/common/interfaces";
+import { ModuleMetadata, Type } from '@nestjs/common/interfaces';
 import { Integration, Options } from '@sentry/types';
-import { ConsoleLoggerOptions, HttpException } from "@nestjs/common";
-import { SeverityLevel } from "@sentry/node";
+import { ConsoleLoggerOptions } from '@nestjs/common';
+import { SeverityLevel } from '@sentry/node';
 
 export interface SentryCloseOptions {
     enabled: boolean;
@@ -44,7 +44,7 @@ export interface SentryInterceptorOptions {
     level?: SeverityLevel;
 
     // https://github.com/getsentry/sentry-javascript/blob/master/packages/node/src/handlers.ts#L163
-    request?: boolean;
+    request?: boolean | string[]; // default: true = ['cookies', 'data', 'headers', 'method', 'query_string', 'url']
     serverName?: boolean;
     transaction?: boolean | 'path' | 'methodPath' | 'handler'; // https://github.com/getsentry/sentry-javascript/blob/master/packages/node/src/handlers.ts#L16
     user?: boolean | string[];
