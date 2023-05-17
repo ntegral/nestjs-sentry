@@ -41,7 +41,6 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
     constructor(opts) {
         super();
         this.opts = opts;
-        this.app = '@ntegral/nestjs-sentry: ';
         if (!(opts && opts.dsn)) {
             return;
         }
@@ -69,74 +68,89 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
         return SentryService_1.serviceInstance;
     }
     log(message, context, asBreadcrumb) {
-        message = `${this.app} ${message}`;
+        var _a, _b;
+        if ((_a = this.opts) === null || _a === void 0 ? void 0 : _a.prefix) {
+            message = `${(_b = this.opts) === null || _b === void 0 ? void 0 : _b.prefix} ${message}`;
+        }
         try {
             super.log(message, context);
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Log,
+                    level: 'log',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Log);
+                Sentry.captureMessage(message, 'log');
         }
         catch (err) { }
     }
     error(message, trace, context) {
-        message = `${this.app} ${message}`;
+        var _a, _b;
+        if ((_a = this.opts) === null || _a === void 0 ? void 0 : _a.prefix) {
+            message = `${(_b = this.opts) === null || _b === void 0 ? void 0 : _b.prefix} ${message}`;
+        }
         try {
             super.error(message, trace, context);
-            Sentry.captureMessage(message, Sentry.Severity.Error);
+            Sentry.captureMessage(message, 'error');
         }
         catch (err) { }
     }
     warn(message, context, asBreadcrumb) {
-        message = `${this.app} ${message}`;
+        var _a, _b;
+        if ((_a = this.opts) === null || _a === void 0 ? void 0 : _a.prefix) {
+            message = `${(_b = this.opts) === null || _b === void 0 ? void 0 : _b.prefix} ${message}`;
+        }
         try {
             super.warn(message, context);
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Warning,
+                    level: 'warning',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Warning);
+                Sentry.captureMessage(message, 'warning');
         }
         catch (err) { }
     }
     debug(message, context, asBreadcrumb) {
-        message = `${this.app} ${message}`;
+        var _a, _b;
+        if ((_a = this.opts) === null || _a === void 0 ? void 0 : _a.prefix) {
+            message = `${(_b = this.opts) === null || _b === void 0 ? void 0 : _b.prefix} ${message}`;
+        }
         try {
             super.debug(message, context);
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Debug,
+                    level: 'debug',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Debug);
+                Sentry.captureMessage(message, 'debug');
         }
         catch (err) { }
     }
     verbose(message, context, asBreadcrumb) {
-        message = `${this.app} ${message}`;
+        var _a, _b;
+        if ((_a = this.opts) === null || _a === void 0 ? void 0 : _a.prefix) {
+            message = `${(_b = this.opts) === null || _b === void 0 ? void 0 : _b.prefix} ${message}`;
+        }
         try {
             super.verbose(message, context);
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Info,
+                    level: 'info',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Info);
+                Sentry.captureMessage(message, 'info');
         }
         catch (err) { }
     }

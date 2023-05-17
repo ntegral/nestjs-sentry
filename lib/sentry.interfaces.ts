@@ -11,7 +11,8 @@ export interface SentryCloseOptions {
 
 export type SentryModuleOptions = Omit<Options, 'integrations'> & {
     integrations?: Integration[];
-    close?: SentryCloseOptions
+    close?: SentryCloseOptions;
+    prefix?: string;
 } & ConsoleLoggerOptions;
 
 export interface SentryOptionsFactory {
