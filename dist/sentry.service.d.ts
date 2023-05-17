@@ -4,7 +4,6 @@ import * as Sentry from '@sentry/node';
 import { SentryModuleOptions } from './sentry.interfaces';
 export declare class SentryService extends ConsoleLogger implements OnApplicationShutdown {
     readonly opts?: SentryModuleOptions | undefined;
-    app: string;
     private static serviceInstance;
     constructor(opts?: SentryModuleOptions | undefined);
     static SentryServiceInstance(): SentryService;

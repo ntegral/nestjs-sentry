@@ -23,7 +23,7 @@ let SentryInterceptor = class SentryInterceptor {
         return next.handle().pipe((0, operators_1.tap)(null, (exception) => {
             if (this.shouldReport(exception)) {
                 this.client.instance().withScope((scope) => {
-                    this.captureException(context, scope, exception);
+                    return this.captureException(context, scope, exception);
                 });
             }
         }));
@@ -63,7 +63,7 @@ let SentryInterceptor = class SentryInterceptor {
             const opts = this.options;
             if (opts.filters) {
                 let filters = opts.filters;
-                return filters.every(({ type, filter }) => {
+                return filters.some(({ type, filter }) => {
                     return !(exception instanceof type && (!filter || filter(exception)));
                 });
             }

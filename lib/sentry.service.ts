@@ -7,7 +7,6 @@ import { SentryModuleOptions } from './sentry.interfaces';
 
 @Injectable()
 export class SentryService extends ConsoleLogger implements OnApplicationShutdown {
-  app = '@ntegral/nestjs-sentry: ';
   private static serviceInstance: SentryService;
   constructor(
     @Inject(SENTRY_MODULE_OPTIONS)
@@ -52,7 +51,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   }
 
   log(message: string, context?: string, asBreadcrumb?: boolean) {
-    message = `${this.app} ${message}`;
+    if (this.opts?.prefix) {
+      message = `${this.opts?.prefix} ${message}`;
+    }
     try {
       super.log(message, context);
       asBreadcrumb ?
@@ -68,7 +69,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   }
 
   error(message: string, trace?: string, context?: string) {
-    message = `${this.app} ${message}`;
+    if (this.opts?.prefix) {
+      message = `${this.opts?.prefix} ${message}`;
+    }
     try {
       super.error(message, trace, context);
       Sentry.captureMessage(message, 'error');
@@ -76,7 +79,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   }
 
   warn(message: string, context?: string, asBreadcrumb?: boolean) {
-    message = `${this.app} ${message}`;
+    if (this.opts?.prefix) {
+      message = `${this.opts?.prefix} ${message}`;
+    }
     try {
       super.warn(message, context);
       asBreadcrumb ?
@@ -92,7 +97,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   }
 
   debug(message: string, context?: string, asBreadcrumb?: boolean) {
-    message = `${this.app} ${message}`;
+    if (this.opts?.prefix) {
+      message = `${this.opts?.prefix} ${message}`;
+    }
     try {
       super.debug(message, context);
       asBreadcrumb ?
@@ -108,7 +115,9 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
   }
 
   verbose(message: string, context?: string, asBreadcrumb?: boolean) {
-    message = `${this.app} ${message}`;
+    if (this.opts?.prefix) {
+      message = `${this.opts?.prefix} ${message}`;
+    }
     try {
       super.verbose(message, context);
       asBreadcrumb ?
