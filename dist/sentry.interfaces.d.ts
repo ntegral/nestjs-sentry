@@ -1,12 +1,12 @@
 import { ModuleMetadata, Type } from "@nestjs/common/interfaces";
 import { Integration, Options } from '@sentry/types';
-import { Severity } from "@sentry/node";
 import { ConsoleLoggerOptions } from "@nestjs/common";
+import { SeverityLevel } from "@sentry/node";
 export interface SentryCloseOptions {
     enabled: boolean;
     timeout?: number;
 }
-export declare type SentryModuleOptions = Omit<Options, 'integrations'> & {
+export type SentryModuleOptions = Omit<Options, 'integrations'> & {
     integrations?: Integration[];
     close?: SentryCloseOptions;
 } & ConsoleLoggerOptions;
@@ -19,7 +19,7 @@ export interface SentryModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'
     useExisting?: Type<SentryOptionsFactory>;
     useFactory?: (...args: any[]) => Promise<SentryModuleOptions> | SentryModuleOptions;
 }
-export declare type SentryTransaction = boolean | 'path' | 'methodPath' | 'handler';
+export type SentryTransaction = boolean | 'path' | 'methodPath' | 'handler';
 export interface SentryFilterFunction {
     (exception: any): boolean;
 }
@@ -36,7 +36,7 @@ export interface SentryInterceptorOptions {
         [key: string]: any;
     };
     fingerprint?: string[];
-    level?: Severity;
+    level?: SeverityLevel;
     request?: boolean;
     serverName?: boolean;
     transaction?: boolean | 'path' | 'methodPath' | 'handler';

@@ -23,7 +23,7 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       ...sentryOptions,
       integrations: [
         new Sentry.Integrations.OnUncaughtException({
-          onFatalError: async (err) => {
+          onFatalError: async (err: Error) => {
             // console.error('uncaughtException, not cool!')
             // console.error(err);
             if (err.name === 'SentryError') {

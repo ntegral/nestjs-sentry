@@ -75,12 +75,12 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Log,
+                    level: 'log',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Log);
+                Sentry.captureMessage(message, 'log');
         }
         catch (err) { }
     }
@@ -88,7 +88,7 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
         message = `${this.app} ${message}`;
         try {
             super.error(message, trace, context);
-            Sentry.captureMessage(message, Sentry.Severity.Error);
+            Sentry.captureMessage(message, 'error');
         }
         catch (err) { }
     }
@@ -99,12 +99,12 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Warning,
+                    level: 'warning',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Warning);
+                Sentry.captureMessage(message, 'warning');
         }
         catch (err) { }
     }
@@ -115,12 +115,12 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Debug,
+                    level: 'debug',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Debug);
+                Sentry.captureMessage(message, 'debug');
         }
         catch (err) { }
     }
@@ -131,12 +131,12 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
             asBreadcrumb ?
                 Sentry.addBreadcrumb({
                     message,
-                    level: Sentry.Severity.Info,
+                    level: 'info',
                     data: {
                         context
                     }
                 }) :
-                Sentry.captureMessage(message, Sentry.Severity.Info);
+                Sentry.captureMessage(message, 'info');
         }
         catch (err) { }
     }
