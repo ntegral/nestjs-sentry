@@ -335,13 +335,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Inject, Injectable, ConsoleLogger } from '@nestjs/common';
 import { OnApplicationShutdown } from '@nestjs/common';
-import { Options, Client } from '@sentry/types';<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+import { ClientOptions, Client } from '@sentry/type<span class="branch-1 cbranch-no" title="branch not covered" >s';</span>
 import * as Sentry from '@sentry/node';
 import { <span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span>SENTRY_MODULE<span class="cstat-no" title="statement not covered" >_OPTIONS } from './sen</span>try.constants'<span class="cstat-no" title="statement not covered" >;<span class="cstat-no" title="statement not covered" ></span></span></span>
 import { SentryModul<span class="branch-1 cbranch-no" title="branch not covered" >eO</span>pti<span class="branch-2 cbranch-no" title="branch not covered" >ons } from './sentry.interfaces';</span>
 &nbsp;
 @Injectable()
-export class SentryService extends ConsoleLogger implements OnApplicationShutdown {
+expo<span class="missing-if-branch" title="else path not taken" >E</span>rt class SentryService extends ConsoleLogger implements OnApplicationShutdown {
   app = '@ntegral/nestjs-sentry: ';
   private static serviceInstance: SentryService;
   constructor(
@@ -358,16 +358,16 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       ...sentryOptions,
       integrations: [
         new Sentry.Integrations.OnUncaughtException({
-          onFatalError: async (err) =&gt; {
-            // console.error('uncaughtException, not cool!')
+          onFatalError: async (err: Error) =&gt; {
+    <span class="missing-if-branch" title="else path not taken" >E</span>        // console.error('uncaughtException, not cool!')
             // console.error(err);
 <span class="cstat-no" title="statement not covered" >            if (err.name === 'SentryError') {</span>
               co<span class="cstat-no" title="statement not covered" >nsole.log(err);</span>
             } else {
               (
                 Sentry.getCurrentHub().getClient&lt;
-                  Client&lt;Options&gt;
-                &gt;() as Client&lt;Options&gt;
+                  Client&lt;ClientOptions&gt;
+                &gt;() as Client&lt;ClientOptions&gt;
               ).captureException(err);
               process.exit(1);
             }
@@ -393,12 +393,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({<span class="cstat-no" title="statement not covered" ></span>
         message,<span class="cstat-no" title="statement not covered" ></span>
-        level: Sentry.Severity.Log,
+        level: 'log',
         data: {
           context
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Log);
+      Sentry.captureMessage(message, 'log');
     } catch (err) {}
   }<span class="fstat-no" title="function not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -406,7 +406,7 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
     message = `${this.app} ${message}`;
     try <span class="cstat-no" title="statement not covered" >{</span>
       super.error(message, trace, context);
-      Sentry.captureMessage(message, Sentry.Severity.Error);
+      Sentry.captureMessage(message, 'error');
     } catch (err) {}
   }
 &nbsp;
@@ -417,12 +417,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({
         message,
-        level: Sentry.Severity.Warning,
+        level: 'warning',
         data: {
           context
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Warning);
+      Sentry.captureMessage(message, 'warning');
     } catch (err) {}
   }
 &nbsp;
@@ -433,12 +433,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({
         message,
-        level: Sentry.Severity.Debug,
+        level: 'debug',
         data: {
           contex<span class="branch-0 cbranch-no" title="branch not covered" >t</span>
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Debug);
+      Sentry.captureMessage(message, 'debug');
     } catch (err) {}
   }
 &nbsp;
@@ -449,12 +449,12 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
       asBreadcrumb ?
       Sentry.addBreadcrumb({
         message,
-        level: Sentry.Severity.Info,
+        level: 'info',
         data: {
           context
         }
       }) :
-      Sentry.captureMessage(message, Sentry.Severity.Info);
+      Sentry.captureMessage(message, 'info');
     } catch (err) {}
   }
 &nbsp;
@@ -475,7 +475,7 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sun Jan 02 2022 13:26:09 GMT-0500 (Eastern Standard Time)
+                at 2024-01-08T15:21:18.763Z
             </div>
         <script src="prettify.js"></script>
         <script>

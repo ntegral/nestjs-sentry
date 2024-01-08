@@ -23,6 +23,9 @@
 - [License](#license)
 - [Acknowledgements](#acknowledgements)
 
+## NestJS 10 Support
+Version 4.x.x will support NestJS 10+. If you need support for older versions please see reference below.  Thanks for you support!
+
 ## NestJS 8 Support
 Version 3.x.x will support NestJS 8+. If you need support for NestJS 7 please continue to use Version 2.x.x.  Thanks for you support!
 
