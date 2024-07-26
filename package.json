@@ -68,6 +68,6 @@
     "typescript": "^4.5.4"
   },
   "optionalDependencies": {
-    "@nestjs/graphql": "~12.0.11"
+    "@nestjs/graphql": "^12.2.0"
   }
 }
