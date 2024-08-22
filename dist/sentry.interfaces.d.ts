@@ -37,6 +37,7 @@ export interface SentryInterceptorOptions {
     };
     fingerprint?: string[];
     level?: SeverityLevel;
+    include?: string[];
     request?: boolean;
     serverName?: boolean;
     transaction?: boolean | 'path' | 'methodPath' | 'handler';

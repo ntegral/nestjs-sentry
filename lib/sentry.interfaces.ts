@@ -43,10 +43,19 @@ export interface SentryInterceptorOptions {
     fingerprint?: string[];
     level?: SeverityLevel;
 
+    // https://github.com/getsentry/sentry-javascript/blob/615c670cfe283e77132339c3d9751060f30d3956/packages/utils/src/requestdata.ts#L148
+    include?: string[];
+
     // https://github.com/getsentry/sentry-javascript/blob/master/packages/node/src/handlers.ts#L163
     request?: boolean;
+    /**
+     * @deprecated Not used anymore in Sentry v8.0
+     */
     serverName?: boolean;
     transaction?: boolean | 'path' | 'methodPath' | 'handler'; // https://github.com/getsentry/sentry-javascript/blob/master/packages/node/src/handlers.ts#L16
     user?: boolean | string[];
+    /**
+     * @deprecated Not used anymore in Sentry v8.0
+     */
     version?: boolean;
 }

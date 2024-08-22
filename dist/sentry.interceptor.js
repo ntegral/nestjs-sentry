@@ -12,8 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SentryInterceptor = void 0;
 const common_1 = require("@nestjs/common");
 const operators_1 = require("rxjs/operators");
-const node_1 = require("@sentry/node");
 const sentry_service_1 = require("./sentry.service");
+const node_1 = require("@sentry/node");
 let SentryInterceptor = class SentryInterceptor {
     constructor(options) {
         this.options = options;
@@ -39,7 +39,7 @@ let SentryInterceptor = class SentryInterceptor {
         }
     }
     captureHttpException(scope, http, exception) {
-        const data = node_1.Handlers.parseRequest({}, http.getRequest(), this.options);
+        const data = (0, node_1.extractRequestData)(http.getRequest(), this.options);
         scope.setExtra('req', data.request);
         if (data.extra)
             scope.setExtras(data.extra);

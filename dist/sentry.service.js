@@ -47,18 +47,18 @@ let SentryService = SentryService_1 = class SentryService extends common_1.Conso
         }
         const { debug, integrations = [] } = opts, sentryOptions = __rest(opts, ["debug", "integrations"]);
         Sentry.init(Object.assign(Object.assign({}, sentryOptions), { integrations: [
-                new Sentry.Integrations.OnUncaughtException({
+                Sentry.onUncaughtExceptionIntegration({
                     onFatalError: (err) => __awaiter(this, void 0, void 0, function* () {
                         if (err.name === 'SentryError') {
                             console.log(err);
                         }
                         else {
-                            Sentry.getCurrentHub().getClient().captureException(err);
+                            Sentry.getClient().captureException(err);
                             process.exit(1);
                         }
                     }),
                 }),
-                new Sentry.Integrations.OnUnhandledRejection({ mode: 'warn' }),
+                Sentry.onUnhandledRejectionIntegration({ mode: 'warn' }),
                 ...integrations,
             ] }));
     }

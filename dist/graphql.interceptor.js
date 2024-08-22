@@ -8,8 +8,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GraphqlInterceptor = void 0;
 const common_1 = require("@nestjs/common");
-const node_1 = require("@sentry/node");
 const _1 = require(".");
+const node_1 = require("@sentry/node");
 let GqlExecutionContext;
 try {
     ({ GqlExecutionContext } = require('@nestjs/graphql'));
@@ -29,7 +29,7 @@ let GraphqlInterceptor = class GraphqlInterceptor extends _1.SentryInterceptor {
         const context = gqlContext.getContext();
         scope.setExtra('type', info.parentType.name);
         if (context.req) {
-            const data = node_1.Handlers.parseRequest({}, context.req, {});
+            const data = (0, node_1.extractRequestData)(context.req, {});
             scope.setExtra('req', data.request);
             if (data.extra)
                 scope.setExtras(data.extra);

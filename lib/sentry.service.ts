@@ -22,7 +22,7 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
     Sentry.init({
       ...sentryOptions,
       integrations: [
-        new Sentry.Integrations.OnUncaughtException({
+        Sentry.onUncaughtExceptionIntegration({
           onFatalError: async (err: Error) => {
             // console.error('uncaughtException, not cool!')
             // console.error(err);
@@ -30,7 +30,7 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
               console.log(err);
             } else {
               (
-                Sentry.getCurrentHub().getClient<
+                Sentry.getClient<
                   Client<ClientOptions>
                 >() as Client<ClientOptions>
               ).captureException(err);
@@ -38,7 +38,7 @@ export class SentryService extends ConsoleLogger implements OnApplicationShutdow
             }
           },
         }),
-        new Sentry.Integrations.OnUnhandledRejection({ mode: 'warn' }),
+        Sentry.onUnhandledRejectionIntegration({ mode: 'warn' }),
         ...integrations,
       ],
     });
