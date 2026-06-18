@@ -24,10 +24,10 @@
 - [Acknowledgements](#acknowledgements)
 
 ## NestJS 10 Support
-Version 4.x.x will support NestJS 10+. If you need support for older versions please see reference below.  Thanks for you support!
+Version 4.x.x will support NestJS 10+. If you need support for older versions please see reference below.  Thanks for your support!
 
 ## NestJS 8 Support
-Version 3.x.x will support NestJS 8+. If you need support for NestJS 7 please continue to use Version 2.x.x.  Thanks for you support!
+Version 3.x.x will support NestJS 8+. If you need support for NestJS 7 please continue to use Version 2.x.x.  Thanks for your support!
 
 ## About
 
@@ -125,7 +125,7 @@ async function bootstrap() {
 bootstrap();
 ```
 
-You can instuct use the SentryService to log non-error messages as breadcrumbs or use the native Sentry.addBreadcrumb method.
+You can instruct use the SentryService to log non-error messages as breadcrumbs or use the native Sentry.addBreadcrumb method.
 
 ```typescript
 import { Injectable } from '@nestjs/common';
@@ -146,7 +146,7 @@ export class AppService {
 
 ## Interceptors
 
-BREAKING CHANGES: The SentryInterceptor can be used in projects that don't require GraphQL. If you will be needed GraphQL support, use the GraphqlInterceptor.  Using the GraphqlInterceptor will create a dependancy for the @nestjs/graphql package.
+BREAKING CHANGES: The SentryInterceptor can be used in projects that don't require GraphQL. If you will be needed GraphQL support, use the GraphqlInterceptor.  Using the GraphqlInterceptor will create a dependency for the @nestjs/graphql package.
 
 ```bash
 npm install --save @nestjs/graphql
